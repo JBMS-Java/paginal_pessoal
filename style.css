@@ -24,14 +24,7 @@
     --accent-color: #f5d300;
     --border-color: #ff3cac;
     --font-title: 'Orbitron', sans-serif;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: 'Space Grotesk', sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
+    --font-body: 'Space Grotesk', sans-serif;
 }
 
 header {
@@ -46,6 +39,24 @@ header h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: var(--bg-color);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+section {
+    padding: 4rem 2rem;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .button {
