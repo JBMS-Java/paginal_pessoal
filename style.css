@@ -25,6 +25,7 @@
     --border-color: #ff3cac;
     --font-title: 'Orbitron', sans-serif;
     --font-body: 'Space Grotesk', sans-serif;
+    --accent-color-dark: #008b8b;
 }
 
 header {
@@ -113,4 +114,58 @@ span {
 
 a {
     text-decoration: none;
+}
+
+#hobbies h2 {
+    font-family: var(--font-title);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color-dark);
+}
+
+.lista-hobbies li {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-left: 3px solid var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.02);
+    transition: background-color 0.3s, tranform 0.3s, box-shadow 0.3s;
+    border-radius: 5px;
+}
+
+.lista-hobbies li:hover {
+    background-color: rgba(0, 255, 255, 0.1);
+    transform: translateX(5px);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.lista-hobbies i {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+@keyframes pulseNeon {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--acent-color-dark);
+        filter: drop-shadow(0 0 3px var(--accent-color));
+    }
+    50% {
+        text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color), 0 0 20px var(--accent-color-dark);
+        filter: drop-shadow(0 0 6px var(--accent-color));
+    }
+}
+
+.neon-text {
+    animation: pulseNeon 2s infinite;
+}
+
+.neon-icon {
+    animation: pulseNeon 2s infinite;
 }
