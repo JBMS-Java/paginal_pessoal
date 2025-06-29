@@ -53,6 +53,29 @@ section {
     padding: 4rem 2rem;
 }
 
+#sobre h2 {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+#sobre p {
+    font-family: 'Poppins', 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.badge {
+    border: 1px solid var(--accent-color);
+    padding: 0 0.3rem;
+    color: var(--accent-color);
+    font-family: var(--font-title);
+}
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -89,6 +112,5 @@ span {
 }
 
 a {
-    color: #00d4ff;
     text-decoration: none;
 }
