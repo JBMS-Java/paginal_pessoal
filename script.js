@@ -42,3 +42,17 @@ function atualizarAnosComoEscritor (dataInicio) {
 document.addEventListener("DOMContentLoaded", function() {
     atualizarAnosComoEscritor("2019-05-19");
 })
+
+// Atualização do ano copyright automatizado:
+function atualizarAnoAtual () {
+    const ano = new Date().getFullYear();
+    const spanAno = document.getElementById("ano-atual");
+
+    if(spanAno) {
+        spanAno.textContent = ano;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    atualizarAnoAtual();
+})
