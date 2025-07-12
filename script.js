@@ -56,3 +56,21 @@ function atualizarAnoAtual () {
 document.addEventListener("DOMContentLoaded", function() {
     atualizarAnoAtual();
 })
+
+// Alternar Temas:
+
+const botaoTema = document.getElementById("toggle-tema");
+
+botaoTema.addEventListener("click", function () {
+    document.body.classList.toggle("modo-claro");
+
+    const temaAtual = document.body.classList.contains("modo-claro") ? "claro" : "escuro";
+    localStorage.setItem("temaPreferido", temaAtual)
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const temaSalvo = localStorage.getItem("temaPreferido");
+    if(temaSalvo === "claro") {
+        document.body.classList.add("modo-claro");
+    }
+})

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.modo-claro {
+    --bg-color: #f2f2f2;
+    --text-color: #111;
+    --acent-color: #00c8ff;
+    --highlight-color: #ff66cc;
+    --box-color: #ffffff;
+}
+
+:root {
+    --bg-color: #0f0f1c;
+    --text-color: #ffffff;
+    --primary-color: #8a2be2;
+    --secondary-color: #00d4ff;
+    --accent-color: #f5d300;
+    --border-color: #ff3cac;
+    --font-title: 'Orbitron', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --accent-color-dark: #008b8b;
+}
