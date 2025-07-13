@@ -1,12 +1,16 @@
 @charset "UTF-8";
 
 .modo-claro {
-    --bg-color: #e6e6f2;
-    --text-color: #1c1c3c;
-    --accent-color: #00f0ff;
+    --bg-color: #f0f2f5;
+    --text-color: #1f1f33;
+    --accent-color: #00d1ff;
     --highlight-color: #ff66cc;
-    --box-color: #f4f4fb;
-    --cor-neon: #00ffff;
+    --box-color: #e4e8f0;
+    --cor-neon: #0ff;
+    --accent-color-dark: #0088aa;
+    --primary-color: #b9dfff;
+    --secondary-color: #ff1493;
+    --box-color-translucent: rgba(255, 255, 255, 0.6);
 }
 
 :root {

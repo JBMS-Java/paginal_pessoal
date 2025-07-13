@@ -51,21 +51,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     atualizarAnoAtual();
 
-    // Alternar tema
+    // Alternar tema com ícone
     const botaoTema = document.getElementById("toggle-tema");
+    const iconeTema = document.getElementById("icone-tema");
 
-    if (botaoTema) {
-        botaoTema.addEventListener("click", function () {
-            document.body.classList.toggle("modo-claro");
-
-            const temaAtual = document.body.classList.contains("modo-claro") ? "claro" : "escuro";
-            localStorage.setItem("temaPreferido", temaAtual);
-        });
+    function atualizarIconeTema(tema) {
+        if (iconeTema) {
+            iconeTema.textContent = tema === "claro" ? "☀️" : "🌙";
+        }
     }
 
     // Aplicar tema salvo no carregamento
     const temaSalvo = localStorage.getItem("temaPreferido");
     if (temaSalvo === "claro") {
         document.body.classList.add("modo-claro");
+        atualizarIconeTema("claro");
+    } else {
+        atualizarIconeTema("escuro");
+    }
+
+    if (botaoTema) {
+        botaoTema.addEventListener("click", function () {
+            const modoClaroAtivado = document.body.classList.toggle("modo-claro");
+
+            const temaAtual = modoClaroAtivado ? "claro" : "escuro";
+            localStorage.setItem("temaPreferido", temaAtual);
+            atualizarIconeTema(temaAtual);
+        });
     }
 });

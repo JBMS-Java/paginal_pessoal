@@ -12,7 +12,7 @@
 
 @keyframes pulseNeon {
     0%, 100% {
-        text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--acent-color-dark);
+        text-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color-dark);
         filter: drop-shadow(0 0 3px var(--accent-color));
     }
     50% {
@@ -46,7 +46,7 @@
 }
 
 @keyframes glitch {
-    0%, 100% ( transform: none; )
+    0%, 100% { transform: none; }
     25% { transform: translate(1px, -1px); }
     50% { transform: translate(-1px, 1px); }
     75% { transform: translate(2px, 0); }
@@ -81,7 +81,7 @@ header h1 {
     font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--bg-color);
+    color: var(--text-color);
 }
 
 .foto-perfil {
@@ -143,7 +143,14 @@ body {
 }
 
 section {
+    background-color: var(--bg-color);
     padding: 4rem 2rem;
+}
+
+h2, h3 {
+    color: var(--accent-color);
+    text-shadow: 0 0 5px var(--accent-color-dark);
+    font-family: var(--font-title);
 }
 
 #sobre h2 {
@@ -169,6 +176,15 @@ section {
     font-family: var(--font-title);
 }
 
+.badge, .skill-badge {
+    background-color: var(--accent-color);
+    color: #fff;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: tranform 0.2s ease;
+}
+
 .container {
     max-width: 800px;
     margin: 0 auto;
@@ -189,7 +205,7 @@ section {
 .button:hover {
     background-color: var(--accent-color);
     color: var(--bg-color);
-    box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-color);
 }
 
 .titulo{
@@ -207,11 +223,25 @@ span {
 a {
     color: var(--accent-color);
     text-decoration: none;
+    transition: text-shadow 0.3s ease;
 }
 
-.card {
+a:hover {
+    text-shadow: 0 0 8px var(--accent-color);
+}
+
+.card, .experiencia {
     background-color: var(--box-color);
     border: 1px solid var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+
+
+article > p {
+    color: #fff;
 }
 
 #hobbies h2 {
@@ -263,7 +293,7 @@ a {
 
 .experiencia h3, .experiencia h4 {
     color: var(--accent-color);
-    text-shadow: 0 0 5px var(--accent-color, 0 0 10px var(--accent-color));
+    text-shadow: 0 0 4px var(--accent-color-dark);
     font-weight: bold;
     font-family: 'Orbitron', sans-serif;
 }
@@ -280,10 +310,10 @@ a {
     border: 1px solid var(--accent-color);
     padding: 0.3rem 0.6rem;
     border-radius: 0.5rem;
-    background-color: rgba(255, 255, 0, 0.05);
+    background-color: rgba(0, 209, 255, 0.1);
     color: var(--accent-color);
     font-weight: bold;
-    text-shadow: 0 0 3px var(--accent-color);
+    text-shadow: none;
 }
 
 .experiencia::before {
@@ -300,16 +330,26 @@ a {
 }
 
 .secao-experiencia {
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(135deg, var(--box-color), var(--primary-color), var(--highlight-color));
     background-size: 600% 600%;
     animation: gradientFlow 10s ease infinite;
+    color: var(--text-color);
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0 20px var(--accent-color);
 }
 
+.modoclaro .experiencia {
+    background-color: var(--box-color-transculent);
+}
+
+.modo-claro .secao-experiencia {
+    background: linear-gradient(135deg, var(--box-color), #dfe6f5);
+}
+
 .neon-text {
     animation: pulseNeon 2s infinite;
+    color: var(--accent-color);
 }
 
 .neon-icon {
