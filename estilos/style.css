@@ -54,13 +54,13 @@
 
 @keyframes neonPulse {
     0% {
-        box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+        box-shadow: 0 0 5px var(--cor-neon), 0 0 10px var(--cor-neon);
     }
     50% {
-        box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+        box-shadow: 0 0 15px var(--cor-neon), 0 0 30px var(--cor-neon);
     }
     100% {
-        box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+        box-shadow: 0 0 5px var(--cor-neon), 0 0 10px var(--cor-neon);
     }
 }
 
@@ -107,24 +107,24 @@ header h1 {
 }
 
 #toggle-tema {
-    background-color: transparent;
-    color: #00ffff;
-    border: 2px solid #00ffff;
-    padding: 0.5rem 1rem;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: transparent;
+    border: 2px solid var(--cor-neon);
+    border-radius: 50%;
+    padding: 0.8rem;
+    font-size: 1.5rem;
+    color: var(--cor-neon);
     cursor: pointer;
-    border-radius: 8px;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 0 8px #00ffff, 0 0 16px transparent;
+    box-shadow: 0 0 10px var(--cor-neon);
     animation: neonPulse 2s infinite;
+    transition: all 0.3s ease;
 }
 
 #toggle-tema:hover {
-    background-color: #00ffff;
-    color: #0a0a0a;
-    box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px var(--cor-neon);
 }
 
 .floating-toggle {

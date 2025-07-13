@@ -1,11 +1,12 @@
 @charset "UTF-8";
 
 .modo-claro {
-    --bg-color: #f2f2f2;
-    --text-color: #111;
-    --acent-color: #00c8ff;
+    --bg-color: #e6e6f2;
+    --text-color: #1c1c3c;
+    --accent-color: #00f0ff;
     --highlight-color: #ff66cc;
-    --box-color: #ffffff;
+    --box-color: #f4f4fb;
+    --cor-neon: #00ffff;
 }
 
 :root {
@@ -18,4 +19,5 @@
     --font-title: 'Orbitron', sans-serif;
     --font-body: 'Space Grotesk', sans-serif;
     --accent-color-dark: #008b8b;
+    --cor-neon:#ff00ff;
 }
