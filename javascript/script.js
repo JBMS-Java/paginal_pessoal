@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function atualizarIconeTema(tema) {
         if (iconeTema) {
-            iconeTema.textContent = tema === "claro" ? "☀️" : "🌙";
+            iconeTema.textContent = tema === "claro" ? "🌙" : "☀️";
         }
     }
 

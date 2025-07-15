@@ -71,7 +71,7 @@
 }
 
 header {
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    background: var(--header-gradient);
     padding: 1rem 2rem;
     text-align: center;
     box-shadow: 0 0 10px var(--primary-color);
@@ -81,7 +81,7 @@ header h1 {
     font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--text-color);
+    color: var(--nome-color);
 }
 
 .foto-perfil {
@@ -153,6 +153,10 @@ h2, h3 {
     font-family: var(--font-title);
 }
 
+#sobre {
+    margin-top: 0.5rem;
+}
+
 #sobre h2 {
     font-family: var(--font-title);
     font-size: 2rem;
@@ -172,13 +176,12 @@ h2, h3 {
 .badge {
     border: 1px solid var(--accent-color);
     padding: 0 0.3rem;
-    color: var(--accent-color);
     font-family: var(--font-title);
 }
 
 .badge, .skill-badge {
     background-color: var(--accent-color);
-    color: #fff;
+    color: var(--bg-color);
     border-radius: 20px;
     font-weight: bold;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
@@ -213,7 +216,7 @@ h2, h3 {
 }
 
 h3 {
-    color: #00d4ff;
+    color: var(--accent-color);
 }
 
 span {
@@ -231,7 +234,7 @@ a:hover {
 }
 
 .card, .experiencia {
-    background-color: var(--box-color);
+    background-color: var(--box-color-transculent);
     border: 1px solid var(--accent-color);
     box-shadow: 0 0 10px var(--accent-color);
     border-radius: 8px;
@@ -335,8 +338,14 @@ article > p {
     animation: gradientFlow 10s ease infinite;
     color: var(--text-color);
     padding: 2rem;
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--accent-color);
     border-radius: 1rem;
     box-shadow: 0 0 20px var(--accent-color);
+}
+
+.secao-experiencia h3, .secao-experiencia p {
+    color: var();
 }
 
 .modoclaro .experiencia {
@@ -344,12 +353,18 @@ article > p {
 }
 
 .modo-claro .secao-experiencia {
-    background: linear-gradient(135deg, var(--box-color), #dfe6f5);
+    background: linear-gradient(135deg, var(--box-color), var(--primary-color), var(--highlight-color));
+    background-size: 600% 600%;
+    animation: gradientFlow 10s ease infinite;
 }
 
 .neon-text {
     animation: pulseNeon 2s infinite;
     color: var(--accent-color);
+}
+
+.modo-claro .neon-text {
+    opacity: 0.9;
 }
 
 .neon-icon {
@@ -360,6 +375,10 @@ article > p {
     margin-top: 3rem;
     padding: 2rem 1rem;
     background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+#competencias h3, .subtitulo {
     color: var(--accent-color);
 }
 
@@ -379,10 +398,10 @@ article > p {
 .subtitulo {
     margin-bottom: 1rem;
     font-size: 1.2rem;
-    color: #fff;
+    color: var(--subtitulo-color);
     padding: 0.5rem 1rem;
     border-radius: 12px;
-    background: linear-gradient(90deg, #a64bf4, #00d4ff);
+    background: var(--subtitulo-gradient);
     background-size: 200%;
     background-position: left;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
