@@ -54,13 +54,13 @@
 
 @keyframes neonPulse {
     0% {
-        box-shadow: 0 0 5px var(--cor-neon), 0 0 10px var(--cor-neon);
+        box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
     }
     50% {
-        box-shadow: 0 0 15px var(--cor-neon), 0 0 30px var(--cor-neon);
+        box-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--accent-color);
     }
     100% {
-        box-shadow: 0 0 5px var(--cor-neon), 0 0 10px var(--cor-neon);
+        box-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
     }
 }
 
@@ -111,20 +111,20 @@ header h1 {
     bottom: 1.5rem;
     right: 1.5rem;
     background: transparent;
-    border: 2px solid var(--cor-neon);
+    border: 2px solid var(--accent-color);
     border-radius: 50%;
     padding: 0.8rem;
     font-size: 1.5rem;
-    color: var(--cor-neon);
+    color: var(--accent-color);
     cursor: pointer;
-    box-shadow: 0 0 10px var(--cor-neon);
+    box-shadow: 0 0 10px var(--accent-color);
     animation: neonPulse 2s infinite;
     transition: all 0.3s ease;
 }
 
 #toggle-tema:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 20px var(--cor-neon);
+    box-shadow: 0 0 20px var(--accent-color);
 }
 
 .floating-toggle {
@@ -398,7 +398,7 @@ article > p {
 .subtitulo {
     margin-bottom: 1rem;
     font-size: 1.2rem;
-    color: var(--subtitulo-color);
+    color: var(--text-color);
     padding: 0.5rem 1rem;
     border-radius: 12px;
     background: var(--subtitulo-gradient);
