@@ -441,6 +441,94 @@ article h3 {
     transform: scale(1.05);
 }
 
+#formacoes {
+    padding: 2rem;
+}
+
+.formacao {
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.formacao-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+    background-color: var(--box-color);
+    color: var(--text-color);
+    font-weight: bold;
+    padding: 1rem;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.formacao-toogle:hover {
+    background-color: var(--highlight-color);
+    color: var(--text-color);
+}
+
+.formacao-conteudo {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.formacao.ativa .formacao-conteudo {
+    max-height: 500px;
+    padding: 1rem;
+}
+
+.icone-seta {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.formacao.ativa .icone-seta {
+    transform: rotate(90deg);
+}
+
+.label-barra {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.barra {
+    background-color: #ccc;
+    border-radius: 5px;
+    height: 20px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.barra-preenchida {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    height: 100%;
+    text-align: right;
+    padding-right: 0.5rem;
+    font-weight: bold;
+    line-height: 20px;
+    border-radius: 5px 0 0 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+.some-overplay {
+    background-color: var(--box-color-transculent);
+    box-shadow: 0 0 10px var(--shadow-color);
+}
+
 footer {
     background-color: var(--bg-color);
     color: var(--text-color);

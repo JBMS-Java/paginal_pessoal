@@ -79,4 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
             atualizarIconeTema(temaAtual);
         });
     }
+
+    // Botão de lista
+    document.querySelectorAll('.formacao-toggle').forEach(botao => {
+        botao.addEventListener('click', () => {
+            const formacao = botao.parentElement;
+            formacao.classList.toggle('ativa');
+        });
+    });
 });
