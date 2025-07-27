@@ -22,19 +22,20 @@
 }
 
 :root {
-    --bg-color: #0f0f1c;
-    --text-color: #e8e8ff;
-    --accent-color: #f5d300;
-    --accent-color-dark: #a07f00;
+    --bg-color: #01012b;
+    --text-color: #d1f7ff;
+    --accent-color: #05d9e8;
+    --accent-color-dark: #005678;
     --nome-color: #ffffff;
-    --highlight-color: #ff2bba;
-    --cor-neon:#ff00ff;
-    --box-color: #1c1c2e;
-    --box-color-translucent: rgba(255, 255, 255, 0.08);
-    --primary-color: #8a2be2;
-    --secondary-color: #00d4ff;
-    --border-color: #ff3cac;
-    --subtitulo-color: #ffffff;
+    --highlight-color: #ff2a6d;
+    --cor-neon:#ff2a6d;
+    --box-color: #005678;
+    --box-color-translucent: rgba(209, 247, 255, 0.08);
+    --primary-color: #05d9e8;
+    --secondary-color: #ff2a6d;
+    --shadow-color: #05d9e8;
+    --border-color: #ff2a6d;
+    --subtitulo-color: #d1f7ff;
     --header-gradient: linear-gradient(90deg, #8a2be2, #00d4ff);
     --subtitulo-gradient: linear-gradient(90deg, #8a2be2, #00d4ff);
     --font-title: 'Orbitron', sans-serif;
