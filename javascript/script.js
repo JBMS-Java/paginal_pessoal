@@ -81,10 +81,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Botão de lista
-    document.querySelectorAll('.formacao-toggle').forEach(botao => {
+    const botoes = document.querySelectorAll('.formacao-toggle');
+
+    botoes.forEach(botao => {
         botao.addEventListener('click', () => {
-            const formacao = botao.parentElement;
-            formacao.classList.toggle('ativa');
-        });
+            const blocoFormacao = botao.parentElement;
+            blocoFormacao.classList.toggle('ativa');
+    });
     });
 });
