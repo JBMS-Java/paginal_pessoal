@@ -1,25 +1,36 @@
 @charset "UTF-8";
 
 .modo-claro {
-    --bg-color: #c6f1f8;
-    --text-color: #01012b;
-    --accent-color: #05d9e8;
-    --accent-color-dark: #038ca1;
-    --border-color: #005678;
-    --box-color: #e9fafe;
-    --cor-neon: #00ffff;
-    --nome-color: #0a0a2a;
-    --highlight-color: #ff2a6b;
-    --box-color-translucent: rgba(255, 255, 255, 0.6);
-    --primary-color: #05d9e8;
-    --secondary-color: #ff2a6d;
-    --header-gradient: linear-gradient(90deg, #05d9e8, #ff2a6d);
-    --subtitulo-gradient: linear-gradient(90deg, #ff2a6d, #05d9e8);
-    --subtitulo-color: var(--text-color);
-    --shadow-color: rgba(1, 1, 43, 0.1);
-    --text-muted: #4d4d6b;
-    --scrollbar-tumb: #05d9e8;
+    --bg-color: #c6f1f8; /* Mantida */
+    --text-color: #082032; /* Azul escuro suave */
+    
+    --accent-color: #00c8d6; /* Azul ciano mais suave */
+    --accent-color-dark: #007a85; /* Para bordas ou hover */
+    
+    --border-color: #00a2b8;
+    --box-color: #e6f9fc; /* Fundo de cartões */
+    --box-color-translucent: rgba(255, 255, 255, 0.5);
+    
+    --highlight-color: #ff5ea8; /* Rosa neon suave */
+    --cor-neon: #ff5ea8;
+    --neon-green: #37ff8b;
+    --neon-pink: #ff5ea8;
+    
+    --primary-color: #00c8d6; /* Azul principal */
+    --secondary-color: #ff5ea8; /* Rosa secundário */
+    
+    --nome-color: #0b3050; /* Para seu nome no header */
+    
+    --header-gradient: linear-gradient(90deg, #00c8d6, #37ff8b);
+    --subtitulo-gradient: linear-gradient(90deg, #ff5ea8, #00c8d6);
+    --subtitulo-color: #00a2b8;
+    
+    --shadow-color: rgba(8, 32, 50, 0.15);
+    --text-muted: #4a6a7a;
+    
+    --scrollbar-thumb: #00c8d6;
 }
+
 
 :root {
     --bg-color: #01012b;

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+body.modo-claro {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.modo-claro header {
+    background: var(--header-gradient);
+    color: var(--text-color);
+}

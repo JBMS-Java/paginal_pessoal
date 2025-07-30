@@ -6,8 +6,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 @keyframes pulseNeon {
@@ -153,6 +151,10 @@ h2, h3 {
     font-family: var(--font-title);
 }
 
+#exp {
+    color: var(--accent-color);
+}
+
 #sobre {
     margin-top: 0.5rem;
 }
@@ -211,12 +213,28 @@ h2, h3 {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
+button:hover, .formacao.toggle:hover {
+    border-color: var(--highlight-color);
+}
+
+.experiencia-conteudo h3 {
+        color: var(--secundary-color);
+}
+
+.icone-hobby {
+    color: var(--accent-color);
+}
+
 .titulo{
     font-family: 'Audiowide';
 }
 
 h3 {
     color: var(--accent-color);
+}
+
+h3, h4, .titulo-secundario, .item-label {
+    color: var(--subtitulo-color);
 }
 
 span {
@@ -230,7 +248,7 @@ a {
 }
 
 a:hover {
-    text-shadow: 0 0 8px var(--accent-color);
+    text-shadow: 0 0 8px var(--highlight-color);
 }
 
 .card, .experiencia {
@@ -240,8 +258,6 @@ a:hover {
     border-radius: 8px;
     padding: 1rem;
 }
-
-
 
 article > p {
     color: #fff;
@@ -281,7 +297,6 @@ article > p {
     font-size: 1.2rem;
     text-shadow: 0 0 5px var(--accent-color);
 }
-
 
 .experiencia {
     display: flex;
@@ -345,17 +360,7 @@ article > p {
 }
 
 .secao-experiencia h3, .secao-experiencia p {
-    color: var();
-}
-
-.modoclaro .experiencia {
-    background-color: var(--box-color-transculent);
-}
-
-.modo-claro .secao-experiencia {
-    background: linear-gradient(135deg, var(--box-color), var(--primary-color), var(--highlight-color));
-    background-size: 600% 600%;
-    animation: gradientFlow 10s ease infinite;
+    /* color: var(); - estava incompleto e removido */
 }
 
 .neon-text {
@@ -363,12 +368,12 @@ article > p {
     color: var(--accent-color);
 }
 
-.modo-claro .neon-text {
-    opacity: 0.9;
-}
-
 .neon-icon {
     animation: pulseNeon 2s infinite;
+}
+
+.icon:hover {
+    color: #ff66cc;
 }
 
 #competencias {
@@ -563,22 +568,9 @@ footer {
     margin: 0 0.5rem;
     font-size: 1.5rem;
     color: var(--accent-color);
-    transition: transform 0.3s ease;
-}
-
-.footer-social a:hover {
-    transform: scale(1.2);
-}
-
-.voltar-topo {
-    display: inline-block;
-    margin-top: 1rem;
-    text-decoration: none;
-    color: var(--accent-color);
-    font-weight: bold;
     transition: color 0.3s ease;
 }
 
-.voltar-topo:hover {
-    color: #fff;
+.footer-social a:hover {
+    color: var(--highlight-color);
 }
