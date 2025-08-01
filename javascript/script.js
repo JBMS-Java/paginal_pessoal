@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Atualiza idade automaticamente a partir da data de nascimento
+    // === Funções de idade e ano ===
     function atualizarIdade(dataNascimento) {
         const hoje = new Date();
         const nascimento = new Date(dataNascimento);
@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     atualizarIdade("2001-05-19");
 
-    // Atualiza anos como escritor a partir da data de início
     function atualizarAnosComoEscritor(dataInicio) {
         const hoje = new Date();
         const inicio = new Date(dataInicio);
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     atualizarAnosComoEscritor("2019-05-19");
 
-    // Atualiza o ano atual no elemento especificado
     function atualizarAnoAtual() {
         const ano = new Date().getFullYear();
         const spanAno = document.getElementById("ano-atual");
@@ -31,28 +29,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     atualizarAnoAtual();
 
-    // Elementos para troca de tema
+    // === Tema claro/escuro ===
     const botaoTema = document.getElementById("toggle-tema");
     const iconeTema = document.getElementById("icone-tema");
 
-    // Atualiza o ícone do botão de tema (lua ou sol)
     function atualizarIconeTema(tema) {
         if (iconeTema) {
             iconeTema.textContent = tema === "claro" ? "🌙" : "☀️";
         }
     }
 
-    // Aplica tema salvo no localStorage ao carregar a página
     const temaSalvo = localStorage.getItem("temaPreferido");
     if (temaSalvo === "claro") {
         document.body.classList.add("modo-claro");
         atualizarIconeTema("claro");
     } else {
-        // Modo escuro é padrão, não adiciona classe
         atualizarIconeTema("escuro");
     }
 
-    // Listener para o botão que alterna o tema
     if (botaoTema) {
         botaoTema.addEventListener("click", () => {
             const modoClaroAtivado = document.body.classList.toggle("modo-claro");
@@ -62,9 +56,66 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Ativa o toggle para expandir/recolher as formações
+    // === Formações e barras de progresso com animação ao entrar na tela ===
     const botoes = document.querySelectorAll('.formacao-toggle');
+
+    function animarBarra(botao) {
+        const porcentagem = parseInt(botao.getAttribute('data-porcentagem'), 10);
+        if (isNaN(porcentagem)) return;
+
+        const spanPorcentagem = botao.querySelector('.porcentagem');
+        const barraProgresso = spanPorcentagem.querySelector('.progresso');
+
+        // Evita animar duas vezes
+        if (botao.dataset.animado === "true") return;
+        botao.dataset.animado = "true";
+
+        // Remove texto antigo se existir
+        if (spanPorcentagem.firstChild && spanPorcentagem.firstChild.nodeType === Node.TEXT_NODE) {
+            spanPorcentagem.firstChild.remove();
+        }
+
+        // Cria o elemento de texto para o número e adiciona no início do span
+        const texto = document.createTextNode('0%');
+        spanPorcentagem.prepend(texto);
+
+        // Faz a barra começar vazia
+        barraProgresso.style.width = '0%';
+
+        // Anima número + barra
+        let valorAtual = 0;
+        const duracao = 1200; // 1.2 segundos
+        const intervalo = 30;
+        const passo = Math.max(1, Math.floor(porcentagem / (duracao / intervalo)));
+
+        setTimeout(() => {
+            const animacao = setInterval(() => {
+                valorAtual += passo;
+                if (valorAtual >= porcentagem) {
+                    valorAtual = porcentagem;
+                    clearInterval(animacao);
+                }
+                texto.nodeValue = valorAtual + '%';
+            }, intervalo);
+
+            // Anima a barra também
+            barraProgresso.style.width = porcentagem + '%';
+        }, 150);
+    }
+
+    // Intersection Observer para detectar quando entra na tela
+    const observer = new IntersectionObserver((entradas) => {
+        entradas.forEach(entrada => {
+            if (entrada.isIntersecting) {
+                animarBarra(entrada.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    // Observa os botões e adiciona o toggle
     botoes.forEach(botao => {
+        observer.observe(botao);
+
         botao.addEventListener('click', () => {
             const blocoFormacao = botao.parentElement;
             blocoFormacao.classList.toggle('ativa');
