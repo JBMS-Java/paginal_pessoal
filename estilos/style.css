@@ -62,6 +62,18 @@
     }
 }
 
+@media (min-width: 768px) {
+    .projetos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .projetos-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -595,6 +607,86 @@ article h3 {
 .some-overplay {
     background-color: var(--box-color-transculent);
     box-shadow: 0 0 10px var(--shadow-color);
+}
+
+.projetos-destaque {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: var(--bg-color);
+}
+
+.projetos-destaque h2 {
+    font-family: var(--font-title), 'Orbitron', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 8px var(--highlight-color);
+}
+
+.projetos-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.projeto-card {
+    background: var(--box-color);
+    border: 2px solid var(--border-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 320px;
+    box-shadow: 0 0 15px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projeto-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 20px var(--highlight-color);
+}
+
+.projeto-card img {
+    width: 100%;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.projeto-card h3 {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.projeto-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.btn-projeto {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-projeto:hover {
+    background: var(--highlight-color);
+    box-shadow: 0 0 10px var(--highlight-color);
+}
+
+.projeto-card.em-breve img {
+    opacity: 0.8;
+    transition: transform 0.3s ease;
+}
+
+.projeto-card.em-breve:hover {
+    transform: scale(1.05);
 }
 
 footer {
