@@ -105,11 +105,17 @@ header h1 {
 }
 
 #toggle-tema {
+    width: 60px;
+    height: 60px;
     position: fixed;
     bottom: 1.5rem;
     right: 1.5rem;
     background: transparent;
-    border: 2px solid var(--accent-color);
+    background-color: var();
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    border: none;
     border-radius: 50%;
     padding: 0.8rem;
     font-size: 1.5rem;
@@ -125,11 +131,39 @@ header h1 {
     box-shadow: 0 0 20px var(--accent-color);
 }
 
+#toggle-tema span.icone-tema {
+    width: 32px;
+    height: 32px;
+    padding-left: 2px;
+    transform: translateX(1px);
+}
+
 .floating-toggle {
     position: fixed;
     bottom: 1.5rem;
     right: 1.5rem;
     z-index: 1000;
+}
+
+.icone-tema {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.sol {
+    background-image: url(../icones/9035048_moon_icon.png);
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.lua {
+    background-image: url(../icones/sol_teste2.png);
+    opacity: 1;
 }
 
 body {
@@ -138,6 +172,16 @@ body {
     font-family: 'Space Grotesk', sans-serif;
     line-height: 1.6;
     min-height: 100vh;
+}
+
+body.modo-claro .sol {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+body.modo-claro .lua {
+    opacity: 0;
+    transform: rotate(-90deg);
 }
 
 section {

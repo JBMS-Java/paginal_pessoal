@@ -31,20 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // === Tema claro/escuro ===
     const botaoTema = document.getElementById("toggle-tema");
-    const iconeTema = document.getElementById("icone-tema");
-
-    function atualizarIconeTema(tema) {
-        if (iconeTema) {
-            iconeTema.textContent = tema === "claro" ? "🌙" : "☀️";
-        }
-    }
-
     const temaSalvo = localStorage.getItem("temaPreferido");
-    if (temaSalvo === "claro") {
+
+    if(temaSalvo === "claro") {
         document.body.classList.add("modo-claro");
-        atualizarIconeTema("claro");
-    } else {
-        atualizarIconeTema("escuro");
     }
 
     if (botaoTema) {
@@ -52,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const modoClaroAtivado = document.body.classList.toggle("modo-claro");
             const temaAtual = modoClaroAtivado ? "claro" : "escuro";
             localStorage.setItem("temaPreferido", temaAtual);
-            atualizarIconeTema(temaAtual);
         });
     }
 
