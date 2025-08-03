@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const botaoTema = document.getElementById("toggle-tema");
     const temaSalvo = localStorage.getItem("temaPreferido");
 
-    if(temaSalvo === "claro") {
+    if (temaSalvo === "claro") {
         document.body.classList.add("modo-claro");
     }
 
@@ -92,16 +92,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 150);
     }
 
-    // Intersection Observer para detectar quando entra na tela
+    // === Intersection Observer para Formações e GitHub ===
     const observer = new IntersectionObserver((entradas) => {
         entradas.forEach(entrada => {
-            if (entrada.isIntersecting) {
+            // Anima barra de formação
+            if (entrada.target.classList.contains('formacao-toggle') && entrada.isIntersecting) {
                 animarBarra(entrada.target);
+            }
+
+            // Mostra cards do GitHub
+            if (entrada.target.classList.contains('github-card') && entrada.isIntersecting) {
+                entrada.target.classList.add('show');
             }
         });
     }, { threshold: 0.3 });
 
-    // Observa os botões e adiciona o toggle
+    // Observa os botões de formação
     botoes.forEach(botao => {
         observer.observe(botao);
 
@@ -109,5 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const blocoFormacao = botao.parentElement;
             blocoFormacao.classList.toggle('ativa');
         });
+    });
+
+    // Observa os cards do GitHub
+    const githubCards = document.querySelectorAll('.github-cards img');
+    githubCards.forEach(card => {
+        card.classList.add('github-card'); // adiciona classe para identificar no observer
+        observer.observe(card);
     });
 });
