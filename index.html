@@ -290,9 +290,21 @@
                 </li>
             </ul>
         </section>
-        <section>
-            <h2>Contato Interativo (Em Breve 👷🚧)</h2>
-            <p>(🏗️Em breve conteúdo aqui🏗️)</p>
+        <section id="contato" class="secao-contato">
+            <h2 class="titulo-secao">Contato</h2>
+            <form id="form-contato" novalidate>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome" required minlength="3">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                
+                <label for="mensagem">Mensagem</label>
+                <textarea id="mensagem" name="mensagem" placeholder="Mensagem"></textarea>
+
+                <button type="submit">Enviar</button>
+                <p id="form-feedback" aria-live="polite"></p>
+            </form>
         </section>
     </main>
     <footer>

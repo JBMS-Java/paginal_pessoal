@@ -123,4 +123,53 @@ document.addEventListener("DOMContentLoaded", function () {
         card.classList.add('github-card'); // adiciona classe para identificar no observer
         observer.observe(card);
     });
+
+    // === Formulário Contato Interativo ===
+    const formContato = document.getElementById('form-contato');
+    const feedback = document.getElementById('form-feedback');
+
+    if (formContato) {
+        formContato.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const nome = formContato.nome.value.trim();
+            const email = formContato.email.value.trim();
+            const mensagem = formContato.mensagem.value.trim();
+
+            if (nome.length < 3) {
+                feedback.textContent = 'Por favor, insira um nome com pelo menos 3 caracteres.';
+                feedback.className = 'erro';
+                formContato.nome.focus();
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                feedback.textContent = 'Por favor, insira um email válido.';
+                feedback.className = 'erro';
+                formContato.email.focus();
+                return;
+            }
+
+            if (mensagem.length < 10) {
+                feedback.textContent = 'A mensagem deve conter pelo menos 10 caracteres.';
+                feedback.className = 'erro';
+                formContato.mensagem.focus();
+                return;
+            }
+
+            feedback.textContent = 'Enviando...';
+            feedback.className = '';
+
+            setTimeout(() => {
+                feedback.textContent = 'Mensagem enviada com sucesso! Obrigado pelo contato.';
+                feedback.className = 'sucesso';
+                formContato.reset();
+            }, 1500);
+        });
+    }
+
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email.toLowerCase());
+    }
 });
