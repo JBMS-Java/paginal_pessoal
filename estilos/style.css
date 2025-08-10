@@ -256,6 +256,16 @@ body.modo-claro .sistemas-usados h4 {
     text-shadow: 0 0 5px var(--accent-color-dark);
 }
 
+body.modo-claro ::placeholder {
+    color: #888;
+    opacity: 1;
+}
+
+::placeholder {
+    color: #fff;
+    opacity: 0.8;
+}
+
 section {
     background-color: var(--bg-color);
     padding: 4rem 2rem;
