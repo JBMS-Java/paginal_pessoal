@@ -359,10 +359,33 @@ article > p {
     text-shadow: 0 0 5px var(--accent-color);
 }
 
+.secao-experiencia {
+    background: linear-gradient(135deg, var(--box-color), var(--primary-color), var(--highlight-color));
+    max-width: 700px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Space-Grotesk', sans-serif;
+    background-size: 600% 600%;
+    animation: gradientFlow 10s ease infinite;
+    color: var(--text-color);
+    padding: 2rem;
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--accent-color);
+    border-radius: 1rem;
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
 .experiencia {
+    background-color: var(--box-color-transculent);
+    border: 2px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    box-shadow: 0 0 10px var(--accent-color);
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
     border: 2px solid var(--accent-color);
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.3);
@@ -370,11 +393,24 @@ article > p {
     overflow: hidden;
 }
 
-.experiencia h3, .experiencia h4 {
+.experiencia h3 {
     color: var(--accent-color);
-    text-shadow: 0 0 4px var(--accent-color-dark);
-    font-weight: bold;
     font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    text-shadow: 0 0 5px var(--accent-color-dark);
+}
+
+.experiencia h4 {
+    color: var(--subtitulo-color);
+    font-weight: 600;
+    margin: 0.2rem 0 0.6rem 0;
+}
+
+.experiencia p {
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.5;
+    margin: 0;
 }
 
 .experiencia ul {
@@ -395,6 +431,12 @@ article > p {
     text-shadow: none;
 }
 
+.experiencia:hover {
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 15px var(--highlight-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 .experiencia::before {
     content: '';
     position: absolute;
@@ -408,20 +450,36 @@ article > p {
     pointer-events: none;
 }
 
-.secao-experiencia {
-    background: linear-gradient(135deg, var(--box-color), var(--primary-color), var(--highlight-color));
-    background-size: 600% 600%;
-    animation: gradientFlow 10s ease infinite;
-    color: var(--text-color);
-    padding: 2rem;
-    backdrop-filter: blur(4px);
-    border: 1px solid var(--accent-color);
-    border-radius: 1rem;
-    box-shadow: 0 0 20px var(--accent-color);
+.periodo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    letter-spacing: 0.05rem;
+    font-family: 'Source Code Pro', monospace;
+    text-shadow: 0 0 4px var(--accent-color-dark);
 }
 
-.secao-experiencia h3, .secao-experiencia p {
-    /* color: var(); - estava incompleto e removido */
+.periodo span {
+    font-weight: normal;
+    color: var(--text-muted);
+    margin-right: 0.2rem;
+}
+
+.sistemas-usados h4 {
+    color: var(--accent-color);
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 0.5rem;
+}
+
+.sistemas-usados ul {
+    list-style: disc inside;
+    margin: 0;
+    padding-left: 1rem;
+    color: var(--text-color);
+}
+
+.sistemas-usados li {
+    margin-bottom: 0.25rem;
 }
 
 .neon-text {
