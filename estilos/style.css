@@ -964,6 +964,35 @@ article h3 {
     transform: scaleX(1);
 }
 
+#btn-copiar-email {
+    background: transparent;
+    border: none;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 0 0.3rem;
+    transition: color 0.3s ease;
+}
+
+#btn-copiar-email:hover {
+    color: var(--highlight-color);
+}
+
+#msg-copiar-email {
+    position: fixed;
+    bottom: 5rem;
+    right: 1rem;
+    padding: 0.6rem 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 9999;
+}
+
 footer {
     background-color: var(--bg-color);
     color: var(--text-color);

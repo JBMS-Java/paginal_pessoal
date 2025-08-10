@@ -172,4 +172,59 @@ document.addEventListener("DOMContentLoaded", function () {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email.toLowerCase());
     }
+
+    // === Botão copiar email no footer ===
+    const btnCopiarEmail = document.getElementById('btn-copiar-email');
+    const emailParaCopiar = 'joaosanata@gmail.com'; // <<< substitua pelo seu email real
+
+    // Cria a div para mostrar feedback de cópia, se ainda não existir
+    let msgCopiar = document.getElementById('msg-copiar-email');
+    if (!msgCopiar) {
+        msgCopiar = document.createElement('div');
+        msgCopiar.id = 'msg-copiar-email';
+        msgCopiar.style.position = 'fixed';
+        msgCopiar.style.bottom = '5rem';
+        msgCopiar.style.right = '1rem';
+        msgCopiar.style.padding = '0.6rem 1rem';
+        msgCopiar.style.backgroundColor = 'rgba(0,0,0,0.8)';
+        msgCopiar.style.color = 'white';
+        msgCopiar.style.borderRadius = '4px';
+        msgCopiar.style.fontSize = '1rem';
+        msgCopiar.style.opacity = '0';
+        msgCopiar.style.pointerEvents = 'none';
+        msgCopiar.style.transition = 'opacity 0.4s ease';
+        document.body.appendChild(msgCopiar);
+    }
+
+    if (btnCopiarEmail) {
+        btnCopiarEmail.addEventListener('click', () => {
+            navigator.clipboard.writeText(emailParaCopiar).then(() => {
+                msgCopiar.textContent = 'Email copiado para a área de transferência!';
+                msgCopiar.style.opacity = '1';
+
+                setTimeout(() => {
+                    msgCopiar.style.opacity = '0';
+                }, 2200);
+            }).catch(() => {
+                msgCopiar.textContent = 'Erro ao copiar o email. Tente manualmente.';
+                msgCopiar.style.opacity = '1';
+
+                setTimeout(() => {
+                    msgCopiar.style.opacity = '0';
+                }, 2200);
+            });
+        });
+    }
+
+    // === Botão voltar ao topo ===
+    const btnVoltarTopo = document.querySelector('.voltar-topo');
+    if (btnVoltarTopo) {
+        btnVoltarTopo.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });
