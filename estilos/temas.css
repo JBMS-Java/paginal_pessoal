@@ -1,34 +1,28 @@
 @charset "UTF-8";
 
 .modo-claro {
-    --bg-color: #dff6ff; /* Azul gelo bem claro, suave para fundo */
-    --text-color: #06142e; /* Azul bem escuro para boa leitura */
-    
-    --accent-color: #00b8d4; /* Ciano elegante, mais fechado */
-    --accent-color-dark: #00788c; /* Para hover/bordas */
-    
-    --border-color: #00b8d4;
-    --box-color: #f0fbff; /* Cartões quase brancos, mas não puro */
-    --box-color-translucent: rgba(255, 255, 255, 0.5);
-    
-    --highlight-color: #ff4d88; /* Rosa neon suave */
-    --cor-neon: #ff4d88;
-    --neon-green: #2ee59d;
-    --neon-pink: #ff4d88;
-    
-    --primary-color: #00b8d4; /* Azul-ciano principal */
-    --secondary-color: #ff4d88; /* Rosa secundário vibrante */
-    
-    --nome-color: #082f49; /* Para seu nome no header */
-    
-    --header-gradient: linear-gradient(90deg, #00b8d4, #2ee59d);
-    --subtitulo-gradient: linear-gradient(90deg, #ff4d88, #00b8d4);
-    --subtitulo-color: #00788c;
-    
-    --shadow-color: rgba(6, 20, 46, 0.12);
-    --text-muted: #4d6882;
-    
-    --scrollbar-thumb: #00b8d4;
+    --bg-color: #f4eaff; /* lilás bem claro */
+    --text-color: #3a0050; /* roxo escuro */
+
+    --primary-color: #7c2aed; /* roxo neon forte */
+    --secondary-color: #ff4d88; /* rosa neon */
+
+    --accent-color: #9b4dff; /* roxo vibrante */
+    --accent-color-dark: #4b0082; /* roxo escuro para hover */
+
+    --highlight-color: #ff4d88; /* rosa neon */
+
+    --box-color: #ffffff; /* branco puro para caixas */
+    --box-color-transculent: rgba(255, 255, 255, 0.85);
+
+    --shadow-color: rgba(58, 0, 80, 0.15); /* sombra roxa suave */
+    --text-muted: #7a5299;
+
+    --subtitulo-color: #7c2aed;
+    --border-color: #7c2aed;
+
+    --header-gradient: linear-gradient(90deg, #7c2aed, #bb6bec);
+    --subtitulo-gradient: linear-gradient(90deg, #ff4d88, #7c2aed);
 }
 
 
