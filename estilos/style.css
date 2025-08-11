@@ -79,6 +79,17 @@
     }
 }
 
+@media (max-width: 480px) {
+    .tecnologias-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .tec-icon {
+        width: 72px;
+        height: 72px;
+    }
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -299,6 +310,73 @@ h2, h3 {
     line-height: 1.6;
     color: var(--text-color);
     margin-bottom: 2rem;
+}
+
+.tecnologias-section {
+    padding: 2rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+    font-family: var(--font-title, 'Orbitron', sans-serif);
+}
+
+.tecnologias-section p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.tecnologias.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.tecnologia-card {
+    background-color: var(--box-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transition: transform 0.3s ease;
+    cursor: default;
+    color: var(--text-color);
+}
+
+.tecnologia-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 20px var(--shadow-color);
+    background-color: var(--box-color-transculent);
+}
+
+.tec-icon {
+    background-color: transparent;
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tecnologia-card h3 {
+    margin: 0.5rem 0 0.25rem;
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.tec-nivel {
+    font-size: 0.9rem;
+    color: var(--text-muted);
 }
 
 .badge {
