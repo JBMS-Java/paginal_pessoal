@@ -127,4 +127,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (buscaInput) buscaInput.addEventListener('input', filtrarEntradas);
 
     filtrarEntradas();
+
+    // === Mostrar estatísticas do GitHub ===
+    const githubImages = document.querySelectorAll(".github-cards img");
+    githubImages.forEach(img => {
+        img.classList.add("show");
+    });
+
 });
