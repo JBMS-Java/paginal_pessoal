@@ -281,9 +281,47 @@
             </div>
             <a href="https://github.com/JBMS-Java" target="_blank" class="github-link">→ Ver Perfil no GitHub</a>
         </section>
-        <section>
-            <h2>Diário de Aprendizado (Em Breve 👷🚧)</h2>
-            <p>(🏗️Em breve conteúdo aqui🏗️)</p>
+        <section id="diario" class="diario-section">
+            <div class="diario-container">
+                <h2 class="section-title" class="diario-titulo">📓 Diário de Aprendizado</h2>
+                <p>Registros e reflexões sobre meu desenvolvimento.</p>
+                <input type="search" id="busca-diario" placeholder="Buscar no diário..." aria-label="Buscar no diário">
+                <div id="filtro-tags">
+                    <button class="tag-filtro ativo" data-tag="all" aria-pressed="true">Todas</button>
+                    <button class="tag-filtro" data-tag="React" aria-pressed="false">React</button>
+                    <button class="tag-filtro" data-tag="JavaScript" aria-pressed="false">JavaScript</button>
+                    <button class="tag-filtro" data-tag="CSS" aria-pressed="false">CSS</button>
+                    <button class="tag-filtro" data-tag="HTML" aria-pressed="false">HTML</button>
+                    <button class="tag-filtro" data-tag="Python" aria-pressed="false">Python</button>
+                    <button class="tag-filtro" data-tag="Machine-learning" aria-pressed="false">Machine Learning</button>
+                </div>
+                <div class="diario-lista" id="lista-diario">
+                    <div class="scroll-wrapper">
+                        <div class="diario-entry-wrapper">
+                            <article class="diario-entry" data-tags="React JavaScript">
+                                <h3>Aprendendo React - Primeiros passos</h3>
+                                <time datetime="2025-08-01">1 de agosto, 2025</time>
+                                <p>Comecei a estudar React e adorei como funciona o conceito de componentes...</p>
+                                <div class="diario-tags">
+                                    <span class="diario-tag">React</span>
+                                    <span class="diario-tag">JavaScript</span>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="diario-entry-wrapper">
+                            <article class="diario-entry" data-tags="HTML5 CSS3">
+                                <h3>Desafios com CSS Grid</h3>
+                                <time datetime="2025-08-05">5 de agosto, 2025</time>
+                                <p>Entendi melhor a distribuição de espaços e o uso do `fr` em layouts reponsivos...</p>
+                                <div class="diario-tags">
+                                    <span class="diario-tag">HTML5</span>
+                                    <span class="diario-tag">CSS3</span>
+                                </div>
+                        </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
         </section>
         <section aria-labelledby="titulo-hobbies" id="hobbies" class="container">
             <h2 id="titulo-hobbies" class="titulo neon-text">Meus hobbies:</h2>

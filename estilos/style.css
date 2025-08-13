@@ -90,6 +90,20 @@
     }
 }
 
+@media (max-width: 480px) {
+  .diario-section {
+    padding: 1.5rem 1rem;
+  }
+
+  .diario-entry {
+    padding: 1rem 1rem;
+  }
+
+  .diario-entry h3 {
+    font-size: 1.2rem;
+  }
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -466,6 +480,201 @@ a:hover {
 article > p {
     color: #fff;
 }
+
+.diario-container {
+    background-color: var(--box-color);
+    border: 2px solid var(--accent-color);
+    text-align: center;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 0 12px var(--accent-color);
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+.diario-titulo {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+#busca-diario {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--accent-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+#busca-diario:focus {
+    outline: none;
+    border-color: var(--focus-color);
+    box-shadow: 0 0 8px var(--focus-color), 0 0 16px var(--focus-color-dark);
+}
+
+#filtro-tags {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-filtro {
+    padding: 0.3rem 0.8rem;
+    border-radius: 12px;
+    cursor: pointer;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    transition: all 0.3s ease;
+}
+
+.tag-filtro:hover,
+.tag-filtro.ativo {
+    background-color: var(--accent-color);
+    color: var(--box-color);
+}
+
+.diario-lista {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4rem;
+    max-height: 60vh;
+    overflow-y: visible;
+    padding: 1rem;
+}
+
+.diario-entry-wrapper {
+    position: relative;
+    padding: 4px;
+    border-radius: 16px;
+    box-shadow:
+        0 0 5px var(--accent-color),
+        0 0 10px var(--accent-color),
+        0 0 15px var(--accent-color);
+    transition: box-shadow 0.25s ease;
+    background: transparent;
+}
+
+.diario-entry-wrapper:hover {
+    box-shadow:
+        0 0 8px var(--accent-color),
+        0 0 15px var(--accent-color),
+        0 0 25px var(--accent-color);
+}
+
+.diario-entry {
+    position: relative;
+    background-color: var(--box-color);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    margin: 0;
+    cursor: default;
+    box-shadow: none;
+    transition: transform 0.25s ease;
+}
+
+.diario-entry-wrapper:hover .diario-entry {
+    transform: translateY(-5px);
+}
+
+.diario-entry:hover {
+    box-shadow: none;
+    transform: translateY(-2px);
+}
+
+.diario-entry h3 {
+    margin: 0 0 0.3rem 0;
+    color: var(--accent-color);
+    font-size: 1.4rem;
+}
+
+.diario-entry time {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 0.75rem;
+    font-style: italic;
+}
+
+.diario-entry p {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.diario-tags {
+    margin-top: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.diario-tag {
+    background-color: var(--accent-color);
+    color: var(--box-color);
+    padding: 0.25rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    user-select: none;
+}
+
+/* PAGINAÇÃO */
+.paginacao {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.paginacao button {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 0 6px var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.paginacao button:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+.paginacao button.ativo {
+    background-color: var(--accent-color);
+    box-shadow: 0 0 12px var(--accent-color);
+    transform: scale(1.1);
+}
+
+.paginacao .seta {
+    font-size: 16px;
+    padding: 6px 10px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 6px;
+    box-shadow: 0 0 6px var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.paginacao .seta:hover {
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
 
 #hobbies h2 {
     font-family: var(--font-title);
@@ -1050,6 +1259,34 @@ article h3 {
 
 .github-link:hover::after {
     transform: scaleX(1);
+}
+
+.tag-filtro {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    user-select: none;
+    cursor: pointer;
+    text-shadow: 0 0 4px var(--accent-color);
+    box-shadow: none;
+}
+
+.tag-filtro[aria-pressed="true"], .tag-filtro:hover {
+    background-color: var(--accent-color);
+    color: var(--box-color);
+    box-shadow: 0 0 6px var(--accent-color),
+                0 0 12px var(--accent-color),
+                0 0 18px var(--accent-color);
+    text-shadow: 
+    0 0 6px var(--box-color),
+    0 0 12px var(--box-color);
+}
+
+.tag-filtro:focus {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
 }
 
 #btn-copiar-email {
