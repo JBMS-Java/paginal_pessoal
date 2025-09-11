@@ -1093,6 +1093,10 @@ article h3 {
     transform: rotate(90deg);
 }
 
+.formacao:hover .progresso {
+    background-color: var(--bg-color);
+}
+
 .porcentagem {
     display: flex;
     flex-direction: column;
@@ -1119,6 +1123,11 @@ article h3 {
     box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
     border-radius: 5px;
     transition: width 1.2s ease-out;
+}
+
+.formacao:hover .porcentagem {
+    color: var(--bg-color);
+    transition: color 0.3s ease;
 }
 
 .some-overplay {
