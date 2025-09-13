@@ -29,6 +29,7 @@
 :root {
     --bg-color: #01012b;
     --text-color: #d1f7ff;
+    --text-color-dark: #222;
     --accent-color: #05d9e8;
     --accent-color-dark: #005678;
     --nome-color: #ffffff;

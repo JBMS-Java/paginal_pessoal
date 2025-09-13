@@ -124,6 +124,10 @@ header h1 {
     color: var(--nome-color);
 }
 
+body:not(.modo-claro) .titulo {
+    color: var(--text-color-dark);
+}
+
 .foto-perfil {
     width: 200px;
     height: 200px;
