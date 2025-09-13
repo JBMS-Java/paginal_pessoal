@@ -149,18 +149,39 @@ header h1 {
 .language-switch {
     display: flex;
     gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
-.language-switch button {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
+.btn-bandeira {
+    width: 40px;
+    height: 25px;
+    border: 2px solid var(--accent-color);
+    border-radius: 6px;
+    background-color: var(--box-color);
     cursor: pointer;
-    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 1rem;
 }
 
-.language-switch button:hover {
-    transform: scale(1.2);
+.btn-bandeira img {
+    width: 90%;
+    height: auto;
+    display: block;
+}
+
+.btn-bandeira:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.btn-bandeira.ativa {
+    box-shadow: 0 0 12px var(--accent-color);
+    border-color: var(--highlight-color);
 }
 
 #toggle-tema {

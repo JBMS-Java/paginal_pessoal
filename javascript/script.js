@@ -316,12 +316,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnPt = document.getElementById("btn-pt");
     const btnEn = document.getElementById("btn-en");
 
-    // Apenas o idioma alternativo
+    // Traduções (adapte para todas as keys que precisar)
     const texts = {
         en: {
             titulo: "Welcome to my website",
-            
             "botao.download": "Download CV",
+            // adicione aqui todas as keys que precisar
         }
     };
 
@@ -338,6 +338,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        // Atualiza classe das bandeiras
+        btnPt.classList.toggle("ativa", idioma === "pt");
+        btnEn.classList.toggle("ativa", idioma === "en");
+
+        // Salva preferência
         localStorage.setItem("idiomaPreferido", idioma);
     }
 
@@ -346,7 +351,11 @@ document.addEventListener("DOMContentLoaded", function () {
         el.setAttribute("data-original", el.textContent);
     });
 
-    // Detecta idioma salvo ou padrão
+    // Event listeners das bandeiras
+    btnPt.addEventListener("click", () => trocarIdioma("pt"));
+    btnEn.addEventListener("click", () => trocarIdioma("en"));
+
+    // Inicializa idioma salvo ou padrão
     const idiomaSalvo = localStorage.getItem("idiomaPreferido") || "pt";
     trocarIdioma(idiomaSalvo);
 });
