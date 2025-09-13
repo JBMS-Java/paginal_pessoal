@@ -311,4 +311,42 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
+    // === Troca de Idioma ===
+    const btnPt = document.getElementById("btn-pt");
+    const btnEn = document.getElementById("btn-en");
+
+    // Apenas o idioma alternativo
+    const texts = {
+        en: {
+            titulo: "Welcome to my website",
+            
+            "botao.download": "Download CV",
+        }
+    };
+
+    function trocarIdioma(idioma) {
+        document.documentElement.setAttribute("lang", idioma === "pt" ? "pt-BR" : "en");
+
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+            const chave = el.getAttribute("data-i18n");
+            if (idioma === "pt") {
+                // Volta ao texto original do HTML
+                el.textContent = el.getAttribute("data-original");
+            } else {
+                el.textContent = texts[idioma][chave] || chave;
+            }
+        });
+
+        localStorage.setItem("idiomaPreferido", idioma);
+    }
+
+    // Salvar o texto original de cada elemento
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+        el.setAttribute("data-original", el.textContent);
+    });
+
+    // Detecta idioma salvo ou padrão
+    const idiomaSalvo = localStorage.getItem("idiomaPreferido") || "pt";
+    trocarIdioma(idiomaSalvo);
 });

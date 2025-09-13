@@ -146,6 +146,23 @@ header h1 {
     box-shadow: inset 0 0 12px var(--accent-color), 0 0 15px var(--accent-color);
 }
 
+.language-switch {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.language-switch button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.language-switch button:hover {
+    transform: scale(1.2);
+}
+
 #toggle-tema {
     width: 60px;
     height: 60px;
