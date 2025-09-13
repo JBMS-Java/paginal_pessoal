@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Traduções (adapte para todas as keys que precisar)
     const texts = {
         en: {
-            titulo: "Welcome to my website",
+            sobre: "Welcome to my website",
             "botao.download": "Download CV",
             // adicione aqui todas as keys que precisar
         }
