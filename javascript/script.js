@@ -344,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
             graduacao: `Level: Graduation`,
             ES_graduacao: `Studying Software Engineering at LaSalle, currently in the 4th semester`,
             IN_lingua: `Level: Fluent`,
-            IN_descricao: `I studied english for 5 years at Western's course and I still practice, oral, written and listening. Now my goal is reach Native Speaking, speak like like a native`,
+            IN_descricao: `I studied english for 5 years at Western's course and I still practice, oral, written and listening. Now my goal is reach Native Speaking, speak like a native`,
             nivel_3_level: `Level: Advanced`,
             nivel_2_level: `Level: Intermediate`,
             nivel_1_level: `Level: Beginner`,
