@@ -3,24 +3,17 @@
 .modo-claro {
     --bg-color: #f4eaff; /* lilás bem claro */
     --text-color: #3a0050; /* roxo escuro */
-
     --primary-color: #7c2aed; /* roxo neon forte */
     --secondary-color: #ff4d88; /* rosa neon */
-
     --accent-color: #9b4dff; /* roxo vibrante */
     --accent-color-dark: #4b0082; /* roxo escuro para hover */
-
     --highlight-color: #ff4d88; /* rosa neon */
-
     --box-color: #ffffff; /* branco puro para caixas */
     --box-color-transculent: rgba(255, 255, 255, 0.85);
-
     --shadow-color: rgba(58, 0, 80, 0.15); /* sombra roxa suave */
     --text-muted: #7a5299;
-
     --subtitulo-color: #7c2aed;
     --border-color: #7c2aed;
-
     --header-gradient: linear-gradient(90deg, #7c2aed, #bb6bec);
     --subtitulo-gradient: linear-gradient(90deg, #ff4d88, #7c2aed);
 }
