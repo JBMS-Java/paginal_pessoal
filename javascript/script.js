@@ -205,7 +205,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (buscaInput) buscaInput.addEventListener('input', filtrarEntradas);
-
     filtrarEntradas();
 
     // === Formulário Contato Interativo ===
@@ -259,9 +258,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // === Botão copiar email no footer ===
     const btnCopiarEmail = document.getElementById('btn-copiar-email');
-    const emailParaCopiar = 'joaosanata@gmail.com'; // <<< substitua pelo seu email real
+    const emailParaCopiar = 'joaosanata@gmail.com';
 
-    // Cria a div para mostrar feedback de cópia, se ainda não existir
     let msgCopiar = document.getElementById('msg-copiar-email');
     if (!msgCopiar) {
         msgCopiar = document.createElement('div');
@@ -285,17 +283,11 @@ document.addEventListener("DOMContentLoaded", function () {
             navigator.clipboard.writeText(emailParaCopiar).then(() => {
                 msgCopiar.textContent = 'Email copiado para a área de transferência!';
                 msgCopiar.style.opacity = '1';
-
-                setTimeout(() => {
-                    msgCopiar.style.opacity = '0';
-                }, 2200);
+                setTimeout(() => msgCopiar.style.opacity = '0', 2200);
             }).catch(() => {
                 msgCopiar.textContent = 'Erro ao copiar o email. Tente manualmente.';
                 msgCopiar.style.opacity = '1';
-
-                setTimeout(() => {
-                    msgCopiar.style.opacity = '0';
-                }, 2200);
+                setTimeout(() => msgCopiar.style.opacity = '0', 2200);
             });
         });
     }
@@ -305,10 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (btnVoltarTopo) {
         btnVoltarTopo.addEventListener('click', (e) => {
             e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 
@@ -316,12 +305,32 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnPt = document.getElementById("btn-pt");
     const btnEn = document.getElementById("btn-en");
 
-    // Traduções (adapte para todas as keys que precisar)
     const texts = {
         en: {
-            sobre: "Welcome to my website",
-            "botao.download": "Download CV",
-            // adicione aqui todas as keys que precisar
+            sobre: "About me:",
+            apresentacao: `Hello! My name is <strong>João Batista Muniz de Santana</strong>, I'm <strong><span id="idade"></span> years old</strong>, I study <a href="https://en.wikipedia.org/wiki/Software_engineering" class="button" target="_blank" rel="external">Software&nbsp;Engineering</a> at <a href="https://www.unilasalle.edu.br/" class="button" target="_blank" rel="external">LaSalle</a> university!`,
+            apresentacao2: `I was born and grew up in <strong>Rio de Janeiro</strong> capital <strong>(RJ)</strong>, but today I live in <strong>Canoas</strong>, <strong>Rio Grande do Sul(RS)</strong>, I lived in Rio until I was 20 years old 🙃. I always try to be open to new experiences, I like going out with friends, eat something, enjoy the company and have a good time. I study programming, mainly involving <span><a href="https://pt.wikipedia.org/wiki/HTML5" target="_blank" rel="external"class="button">HTML5</a></span>, <span><a href="https://en.wikipedia.org/wiki/CSS" target="_blank" rel="external" class="button">CSS3</a></span>, <span><a href="https://pt.wikipedia.org/wiki/JavaScript" target="_blank" rel="external" class="button">JS</a></span> e <span><a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank" rel="external" class="button">Python</a></span>, I am passionate about creating projects, solving problems and I'm also getting into <span><a href="https://en.wikipedia.org/wiki/Machine_learning" target="_blank" rel="external" class="button">Machine Learning (ML)</a></span>, I want to specialize in <span><a href="https://pt.wikipedia.org/wiki/Intelig%C3%AAncia_artificial" target="_blank" rel="external" class="button">IA</a></span> to create useful solutions and creative for society, that can really help people in need.`,
+            stacks: `My Stacks`,
+            tecnologias: `Favorite Technologies`,
+            tecnologias_descricao: `Tools I most enjoy working with`,
+            nivel_3: `Advanced`,
+            nivel_2: `Intermediary`,
+            nivel_1: `Beginner`,
+            experiencias_titulo: `Relevant Professional Experiences`,
+            data_inicio: `Start: `,
+            data_fim: `Exit: `,
+            cargo1: `Position: Service Desk Analyst`,
+            cargo2: `Position: IT Intern`,
+            cargo3: `Position: Junior Operator`,
+            empresa1: `Company: HCLTechnologies (HCLTech)`,
+            empresa2: `Company: Fundação Hospital Centenário de São Leolpoldo (FHC)`,
+            empresa3: `Company: Rede Brasil Gestão de Ativos`,
+            descricao1: `I work as a Service Desk Analyst, Bilingual, helping to solve problems, providing assistance at the national and international level.`,
+            descricao2: `I worked with IT support, providing solutions to tickets and dealing directly with doctors and other employees in order to deliver the best result possible to the final client: the customer. I participated in projects to improve the hospital's infrastructure, not olny with systems, but with hardware parts (Example: switches). I work as N1, making the first contact and already meeting simple and more complex demands`,
+            descricao3: `I worked in the collection operations department, practicing SDR, providing humanized care and smart solutions.`,
+            sistemas: `Used Systems:`,
+        "botao.download": "Download CV",
+        // adicione aqui todas as keys que precisar
         }
     };
 
@@ -331,10 +340,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll("[data-i18n]").forEach((el) => {
             const chave = el.getAttribute("data-i18n");
             if (idioma === "pt") {
-                // Volta ao texto original do HTML
-                el.textContent = el.getAttribute("data-original");
+                el.innerHTML = el.getAttribute("data-original");
             } else {
-                el.textContent = texts[idioma][chave] || chave;
+                el.innerHTML = texts[idioma][chave] || el.getAttribute("data-original");
             }
         });
 
@@ -344,18 +352,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Salva preferência
         localStorage.setItem("idiomaPreferido", idioma);
+
+        // 🔥 Recalcula os valores dinâmicos após trocar o innerHTML
+        atualizarIdade("2001-05-19"); // mesma data que você usa no resto do código
+        atualizarAnosComoEscritor("2019-05-19"); // se você usa isso no seu texto
+        atualizarAnoAtual(); // se você exibe o ano no footer
     }
 
-    // Salvar o texto original de cada elemento
     document.querySelectorAll("[data-i18n]").forEach((el) => {
-        el.setAttribute("data-original", el.textContent);
+        el.setAttribute("data-original", el.innerHTML);
     });
 
-    // Event listeners das bandeiras
     btnPt.addEventListener("click", () => trocarIdioma("pt"));
     btnEn.addEventListener("click", () => trocarIdioma("en"));
 
-    // Inicializa idioma salvo ou padrão
     const idiomaSalvo = localStorage.getItem("idiomaPreferido") || "pt";
     trocarIdioma(idiomaSalvo);
 });
