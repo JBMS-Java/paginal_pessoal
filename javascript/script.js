@@ -350,8 +350,10 @@ document.addEventListener("DOMContentLoaded", function () {
             nivel_2_level: `Level: Intermediate`,
             nivel_1_level: `Level: Beginner`,
             HTML_descricao: `I studied complete HTML5 in Udemy with Matheus Battisti and Gustavo Guanabara, I went through the concepts from the most basic to the most advanced. Currently I'm practicing to fix and improve my knowledge`,
-        "botao.download": "Download CV",
-        // adicione aqui todas as keys que precisar
+            "botao.download": "Download CV",
+            CSS_descricao: `I studied HTML5 and CSS3 in Udemy with Matheus Battisti and Gustavo Guanabara, I'm learning to develop my skills with CSS, including animated CSS. At the moment, I'm still in the learning phase along with the practice`,
+            JS_descricao: `I study JavaScript in Udemy with Matheus Battisti, it still is a language that I'm still fixing the basic concepts and going beyond in the introduction of the intermediate concepts`,
+            py_descricao: `I started Python in Udemy, I already had contact with this language before and currently I'm trying to focus on this language to deepen more elaborated and advanced concepts`,
         }
     };
 
