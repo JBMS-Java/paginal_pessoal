@@ -332,6 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sistemas: `Used Systems:`,
             competencias: `Competencies:`,
             ingles: `English`,
+            espanhol: `Spanish`,
             SS1: `Good communication`,
             SS2: `Light coexistence`,
             SS3: `Teamwork`,
