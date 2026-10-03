@@ -1152,14 +1152,6 @@ article > p {
     white-space: pre-wrap;
 }
 
-.campo-armadilha {
-    position: absolute !important;
-    left: -10000px !important;
-    width: 1px !important;
-    height: 1px !important;
-    overflow: hidden !important;
-}
-
 /* PAGINAÇÃO */
 .paginacao {
     display: flex;

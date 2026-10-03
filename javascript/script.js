@@ -614,7 +614,7 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 await apiRequest('/api/messages', {
                     method: 'POST',
-                    body: JSON.stringify({ nome, email, mensagem, website: String(formData.get('website') || '') })
+                    body: JSON.stringify({ nome, email, mensagem })
                 });
                 feedback.textContent = idiomaAtual === 'en' ? texts.en.sent : 'Mensagem enviada com sucesso. Obrigado pelo contato.';
                 feedback.className = 'sucesso';
