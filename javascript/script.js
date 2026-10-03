@@ -48,34 +48,97 @@ document.addEventListener("DOMContentLoaded", function () {
     // === Formações e barras de progresso com animação ao entrar na tela ===
     const botoes = document.querySelectorAll('.formacao-toggle');
 
+    function gerarIconeFormacao(titulo) {
+        const texto = titulo.trim();
+
+        if (/ENGENHARIA|SOFTWARE/i.test(texto)) return 'fa-solid fa-code';
+        if (/INGLÊS|ENGLISH/i.test(texto)) return 'fi fi-us';
+        if (/ESPANHOL|SPANISH/i.test(texto)) return 'fi fi-es';
+        if (/HTML/i.test(texto)) return 'fa-brands fa-html5';
+        if (/CSS/i.test(texto)) return 'fa-brands fa-css3-alt';
+        if (/JAVASCRIPT|JS/i.test(texto)) return 'fa-brands fa-js';
+        if (/PYTHON/i.test(texto)) return 'fa-brands fa-python';
+        if (/SQL/i.test(texto)) return 'fa-solid fa-database';
+        if (/PHP/i.test(texto)) return 'fa-brands fa-php';
+        if (/REACT/i.test(texto)) return 'fa-brands fa-react';
+        if (/GIT/i.test(texto)) return 'fa-brands fa-git-alt';
+        if (/MACHINE|APRENDIZADO/i.test(texto)) return 'fa-solid fa-brain';
+
+        return 'fa-solid fa-graduation-cap';
+    }
+
+    function configurarHoverVisual(botao) {
+        const visual = botao.querySelector('.formacao-visual');
+        if (!visual || visual.dataset.hoverAtivado === 'true') return;
+
+        visual.dataset.hoverAtivado = 'true';
+        visual.addEventListener('mouseenter', () => {
+            visual.classList.add('is-hovered');
+        });
+        visual.addEventListener('mouseleave', () => {
+            visual.classList.remove('is-hovered');
+        });
+    }
+
     function animarBarra(botao) {
         const porcentagem = parseInt(botao.getAttribute('data-porcentagem'), 10);
         if (isNaN(porcentagem)) return;
 
-        const spanPorcentagem = botao.querySelector('.porcentagem');
-        const barraProgresso = spanPorcentagem.querySelector('.progresso');
+        let spanPorcentagem = botao.querySelector('.porcentagem');
+        let visual = botao.querySelector('.formacao-visual');
 
-        // Evita animar duas vezes
-        if (botao.dataset.animado === "true") return;
-        botao.dataset.animado = "true";
+        if (!spanPorcentagem || !visual) {
+            const titulo = botao.querySelector('.titulo');
+            const visualNovo = document.createElement('div');
+            visualNovo.className = 'formacao-visual';
+            visualNovo.style.setProperty('--progress', '0');
+            const icon = document.createElement('span');
+            icon.className = 'formacao-icon';
+            icon.className += ' ' + gerarIconeFormacao(titulo ? titulo.textContent : '');
+            visualNovo.appendChild(icon);
 
-        // Remove texto antigo se existir
-        if (spanPorcentagem.firstChild && spanPorcentagem.firstChild.nodeType === Node.TEXT_NODE) {
-            spanPorcentagem.firstChild.remove();
+            const seta = botao.querySelector('.icone-seta');
+            const alvoInsercao = seta ? seta.nextSibling : botao.firstChild;
+            botao.insertBefore(visualNovo, alvoInsercao);
+
+            const novoSpan = document.createElement('span');
+            novoSpan.className = 'percent-value';
+            novoSpan.textContent = '0%';
+            const spanMeta = botao.querySelector('.porcentagem');
+            if (spanMeta) {
+                spanMeta.appendChild(novoSpan);
+            }
+
+            spanPorcentagem = botao.querySelector('.porcentagem');
+            visual = botao.querySelector('.formacao-visual');
         }
 
-        // Cria o elemento de texto para o número e adiciona no início do span
-        const texto = document.createTextNode('0%');
-        spanPorcentagem.prepend(texto);
+        configurarHoverVisual(botao);
 
-        // Faz a barra começar vazia
-        barraProgresso.style.width = '0%';
+        if (botao.dataset.animado === 'true') return;
+        botao.dataset.animado = 'true';
 
-        // Anima número + barra
+        const valorTexto = spanPorcentagem.querySelector('.percent-value') || document.createElement('span');
+        valorTexto.className = 'percent-value';
+        if (!valorTexto.parentElement) {
+            spanPorcentagem.appendChild(valorTexto);
+        }
+        valorTexto.textContent = '0%';
+
+        const icon = visual.querySelector('.formacao-icon') || document.createElement('span');
+        if (!icon.parentElement) {
+            icon.className = 'formacao-icon';
+            visual.appendChild(icon);
+        }
+        const titulo = botao.querySelector('.titulo');
+        icon.className = 'formacao-icon ' + gerarIconeFormacao(titulo ? titulo.textContent : '');
+
         let valorAtual = 0;
-        const duracao = 1200; // 1.2 segundos
+        const duracao = 1200;
         const intervalo = 30;
         const passo = Math.max(1, Math.floor(porcentagem / (duracao / intervalo)));
+
+        visual.style.setProperty('--progress', '0');
 
         setTimeout(() => {
             const animacao = setInterval(() => {
@@ -84,11 +147,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     valorAtual = porcentagem;
                     clearInterval(animacao);
                 }
-                texto.nodeValue = valorAtual + '%';
+                visual.style.setProperty('--progress', String(valorAtual));
+                valorTexto.textContent = valorAtual + '%';
             }, intervalo);
-
-            // Anima a barra também
-            barraProgresso.style.width = porcentagem + '%';
         }, 150);
     }
 
@@ -110,6 +171,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Observa os botões de formação
     botoes.forEach(botao => {
         observer.observe(botao);
+
+        configurarHoverVisual(botao);
 
         botao.addEventListener('click', () => {
             const blocoFormacao = botao.parentElement;
@@ -220,31 +283,31 @@ document.addEventListener("DOMContentLoaded", function () {
             const mensagem = formContato.mensagem.value.trim();
 
             if (nome.length < 3) {
-                feedback.textContent = 'Por favor, insira um nome com pelo menos 3 caracteres.';
+                feedback.textContent = idiomaAtual === "en" ? texts.en.name_error : 'Por favor, insira um nome com pelo menos 3 caracteres.';
                 feedback.className = 'erro';
                 formContato.nome.focus();
                 return;
             }
 
             if (!validateEmail(email)) {
-                feedback.textContent = 'Por favor, insira um email válido.';
+                feedback.textContent = idiomaAtual === "en" ? texts.en.email_error : 'Por favor, insira um email válido.';
                 feedback.className = 'erro';
                 formContato.email.focus();
                 return;
             }
 
             if (mensagem.length < 10) {
-                feedback.textContent = 'A mensagem deve conter pelo menos 10 caracteres.';
+                feedback.textContent = idiomaAtual === "en" ? texts.en.message_error : 'A mensagem deve conter pelo menos 10 caracteres.';
                 feedback.className = 'erro';
                 formContato.mensagem.focus();
                 return;
             }
 
-            feedback.textContent = 'Enviando...';
+            feedback.textContent = idiomaAtual === "en" ? texts.en.sending : 'Enviando...';
             feedback.className = '';
 
             setTimeout(() => {
-                feedback.textContent = 'Mensagem enviada com sucesso! Obrigado pelo contato.';
+                feedback.textContent = idiomaAtual === "en" ? texts.en.sent : 'Mensagem enviada com sucesso. Obrigado pelo contato.';
                 feedback.className = 'sucesso';
                 formContato.reset();
             }, 1500);
@@ -281,11 +344,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (btnCopiarEmail) {
         btnCopiarEmail.addEventListener('click', () => {
             navigator.clipboard.writeText(emailParaCopiar).then(() => {
-                msgCopiar.textContent = 'Email copiado para a área de transferência!';
+                msgCopiar.textContent = idiomaAtual === "en" ? texts.en.email_copied : 'Email copiado para a área de transferência!';
                 msgCopiar.style.opacity = '1';
                 setTimeout(() => msgCopiar.style.opacity = '0', 2200);
             }).catch(() => {
-                msgCopiar.textContent = 'Erro ao copiar o email. Tente manualmente.';
+                msgCopiar.textContent = idiomaAtual === "en" ? texts.en.email_copy_error : 'Erro ao copiar o email. Tente manualmente.';
                 msgCopiar.style.opacity = '1';
                 setTimeout(() => msgCopiar.style.opacity = '0', 2200);
             });
@@ -305,77 +368,158 @@ document.addEventListener("DOMContentLoaded", function () {
     const btnPt = document.getElementById("btn-pt");
     const btnEn = document.getElementById("btn-en");
 
+    let idiomaAtual = "pt";
     const texts = {
         en: {
-            objetivo: "Future Software Enginner",
+            page_title: "João Muniz | Portfolio",
+            profile_alt: "João Muniz's profile photo",
+            toggle_theme: "Toggle color theme",
+            language_portuguese: "Portuguese",
+            language_english: "English",
+            objetivo: "Future Software Engineer",
             sobre: "About me:",
-            apresentacao: `Hello! My name is <strong>João Batista Muniz de Santana</strong>, I'm <strong><span id="idade"></span> years old</strong>, I study <a href="https://en.wikipedia.org/wiki/Software_engineering" class="button" target="_blank" rel="external">Software&nbsp;Engineering</a> at <a href="https://www.unilasalle.edu.br/" class="button" target="_blank" rel="external">LaSalle</a> university!`,
-            apresentacao2: `I was born and grew up in <strong>Rio de Janeiro</strong> capital <strong>(RJ)</strong>, but today I live in <strong>Canoas</strong>, <strong>Rio Grande do Sul(RS)</strong>, I lived in Rio until I was 20 years old 🙃. I always try to be open to new experiences, I like going out with friends, eat something, enjoy the company and have a good time. I study programming, mainly involving <span><a href="https://pt.wikipedia.org/wiki/HTML5" target="_blank" rel="external"class="button">HTML5</a></span>, <span><a href="https://en.wikipedia.org/wiki/CSS" target="_blank" rel="external" class="button">CSS3</a></span>, <span><a href="https://pt.wikipedia.org/wiki/JavaScript" target="_blank" rel="external" class="button">JS</a></span> and <span><a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank" rel="external" class="button">Python</a></span>, I am passionate about creating projects, solving problems and I'm also getting into <span><a href="https://en.wikipedia.org/wiki/Machine_learning" target="_blank" rel="external" class="button">Machine Learning (ML)</a></span>, I want to specialize in <span><a href="https://pt.wikipedia.org/wiki/Intelig%C3%AAncia_artificial" target="_blank" rel="external" class="button">AI</a></span> to create useful and creative solutions for society, that can really help people in need.`,
-            stacks: `My Stacks`,
-            tecnologias: `Favorite Technologies`,
-            tecnologias_descricao: `Tools I most enjoy working with`,
-            nivel_3: `Advanced`,
-            nivel_2: `Intermediary`,
-            nivel_1: `Beginner`,
-            experiencias_titulo: `Relevant Professional Experiences`,
-            data_inicio: `Start: `,
-            data_fim: `Exit: `,
-            cargo1: `Position: Service Desk Analyst`,
-            cargo2: `Position: IT Intern`,
-            cargo3: `Position: Junior Operator`,
-            empresa1: `Company: HCLTechnologies (HCLTech)`,
-            empresa2: `Company: Fundação Hospital Centenário de São Leolpoldo (FHC)`,
-            empresa3: `Company: Rede Brasil Gestão de Ativos`,
-            descricao1: `I work as a Service Desk Analyst, Bilingual, helping to solve problems, providing assistance at the national and international level.`,
-            descricao2: `I worked with IT support, providing solutions to tickets and dealing directly with doctors and other employees in order to deliver the best result possible to the final client: the customer. I participated in projects to improve the hospital's infrastructure, not olny with systems, but with hardware parts (Example: switches). I work as N1, making the first contact and already meeting simple and more complex demands`,
-            descricao3: `I worked in the collection operations department, practicing SDR, providing humanized care and smart solutions.`,
-            sistemas: `Used Systems:`,
-            competencias: `Competencies:`,
-            ingles: `English`,
-            espanhol: `Spanish`,
-            SS1: `Good communication`,
-            SS2: `Light coexistence`,
-            SS3: `Teamwork`,
-            SS4: `Patience`,
-            SS5: `Adaptability`,
-            SS6: `Proactivity`,
-            SS7: `Ethics`,
-            SS8: `Responsibility`,
-            formacoes: `Formations`,
-            ES: `Software Engineering`,
-            graduacao: `Level: Graduation`,
-            ES_graduacao: `Studying Software Engineering at LaSalle, currently in the 4th semester`,
-            IN_lingua: `Level: Fluent`,
-            IN_descricao: `I studied english for 5 years at Western's course and I still practice, oral, written and listening. Now my goal is reach Native Speaking, speak like a native`,
-            nivel_3_level: `Level: Advanced`,
-            nivel_2_level: `Level: Intermediate`,
-            nivel_1_level: `Level: Beginner`,
-            HTML_descricao: `I studied complete HTML5 in Udemy with Matheus Battisti and Gustavo Guanabara, I went through the concepts from the most basic to the most advanced. Currently I'm practicing to fix and improve my knowledge`,
-            "botao.download": "Download CV",
-            CSS_descricao: `I studied HTML5 and CSS3 in Udemy with Matheus Battisti and Gustavo Guanabara, I'm learning to develop my skills with CSS, including animated CSS. At the moment, I'm still in the learning phase along with the practice`,
-            JS_descricao: `I study JavaScript in Udemy with Matheus Battisti, it still is a language that I'm still fixing the basic concepts and going beyond in the introduction of the intermediate concepts`,
-            py_descricao: `I started Python in Udemy, I already had contact with this language before and currently I'm trying to focus on this language to deepen more elaborated and advanced concepts`,
+            apresentacao: `Hello! My name is <strong>João Batista Muniz de Santana</strong>. I'm <strong><span id="idade"></span> years old</strong> and study <a href="https://en.wikipedia.org/wiki/Software_engineering" class="button" target="_blank" rel="external">Software&nbsp;Engineering</a> at <a href="https://www.unilasalle.edu.br/" class="button" target="_blank" rel="external">LaSalle</a> University!`,
+            apresentacao2: `I was born and raised in <strong>Rio de Janeiro</strong>, in the state capital <strong>(RJ)</strong>, but now I live in <strong>Canoas</strong>, <strong>Rio Grande do Sul (RS)</strong>. I lived in Rio until I was 20 🙃. I enjoy staying open to new experiences, going out with friends, sharing a meal, and spending good time together. I study programming, especially <span><a href="https://en.wikipedia.org/wiki/HTML5" target="_blank" rel="external" class="button">HTML5</a></span>, <span><a href="https://en.wikipedia.org/wiki/CSS" target="_blank" rel="external" class="button">CSS3</a></span>, <span><a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank" rel="external" class="button">JavaScript</a></span>, and <span><a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank" rel="external" class="button">Python</a></span>. I love building projects and solving problems, and I'm also exploring <span><a href="https://en.wikipedia.org/wiki/Machine_learning" target="_blank" rel="external" class="button">Machine Learning (ML)</a></span>. I want to specialize in <span><a href="https://en.wikipedia.org/wiki/Artificial_intelligence" target="_blank" rel="external" class="button">AI</a></span> to create useful, creative solutions that can help people.`,
+            stacks: "My Tech Stack",
+            tecnologias: "Favorite Technologies",
+            tecnologias_descricao: "The tools and languages I most enjoy working with",
+            nivel_3: "Advanced",
+            nivel_2: "Intermediate",
+            nivel_1: "Beginner",
+            experiencias_titulo: "Relevant Professional Experience",
+            data_inicio: "Start: ",
+            data_fim: "End: ",
+            cargo1: "Position: Service Desk Analyst",
+            cargo2: "Position: IT Intern",
+            cargo3: "Position: Junior Operator",
+            empresa1: "Company: HCLTechnologies (HCLTech)",
+            empresa2: "Company: Fundação Hospital Centenário de São Leopoldo (FHC)",
+            empresa3: "Company: Rede Brasil de Gestão de Ativos",
+            descricao1: "I work as a bilingual Service Desk Analyst, troubleshooting issues and assisting users in Brazil and abroad.",
+            descricao2: "I provided IT support, handling service requests and assisting doctors and other hospital staff to deliver the best possible experience for patients. I took part in infrastructure improvement projects involving both systems and hardware, such as switches. As a Level 1 technician, I handled initial contact and resolved a range of requests in collaboration with the team.",
+            descricao3: "I worked in collections operations as an SDR, providing empathetic customer service and practical solutions.",
+            sistemas: "Systems used:",
+            competencias: "Skills:",
+            hard_skills: "Hard skills:",
+            soft_skills: "Soft skills:",
+            ingles: "English",
+            espanhol: "Spanish",
+            SS1: "Good communication",
+            SS2: "Easy to get along with",
+            SS3: "Teamwork",
+            SS4: "Patient",
+            SS5: "Adaptable",
+            SS6: "Proactive",
+            SS7: "Ethical",
+            SS8: "Responsible",
+            formacoes: "Education & Training",
+            ES: "Software Engineering",
+            graduacao: "Level: Undergraduate",
+            ES_graduacao: "Studying Software Engineering at LaSalle, currently in my 6th semester.",
+            IN_lingua: "Level: Fluent",
+            IN_descricao: "I studied English for five years at Western's and still practice speaking, writing, and listening. My goal is to speak English like a native.",
+            ES_lingua: "Level: Beginner",
+            ES_descricao: "I'm beginning a Spanish course at KNN Idiomas.",
+            nivel_3_level: "Level: Advanced",
+            nivel_2_level: "Level: Intermediate",
+            nivel_1_level: "Level: Beginner",
+            HTML_descricao: "I completed an HTML5 course on Udemy with Matheus Battisti and Gustavo Guanabara, covering concepts from the basics to more advanced topics. I'm now practicing to strengthen and expand my skills.",
+            CSS_descricao: "I studied HTML5 and CSS3 on Udemy with Matheus Battisti and Gustavo Guanabara. I'm continuing to develop my CSS skills, including animation, through hands-on practice.",
+            JS_descricao: "I'm studying JavaScript on Udemy with Matheus Battisti. I'm reinforcing the fundamentals and beginning to explore intermediate concepts.",
+            py_descricao: "I'm starting a Python course on Udemy. I have some previous experience with the language and am now focusing on building a deeper understanding of more advanced concepts.",
+            sql_title: "SQL (Data Analysis)",
+            sql_description: "I'm starting André Krul's Udemy course, SQL for Data Analysis: From Basics to Advanced.",
+            php_description: "I'm studying PHP through Rodrigo Luiz Barbosa de Souza's Udemy course, PHP 8 Complete: Updated Web Development Course (2025).",
+            react_description: "I have a React course with Matheus Battisti on Udemy lined up; I haven't started it yet.",
+            git_description: "I completed Gustavo Guanabara's Git course, learning to version code with local repositories and publish projects on GitHub. I'm continuing to improve through practice.",
+            machine_learning_description: "My Udemy Machine Learning course is coming up, and I plan to start it alongside Python.",
+            featured_projects: "Featured Projects",
+            portfolio_preview_alt: "Portfolio preview",
+            portfolio_project: "Portfolio",
+            portfolio_description: "My personal portfolio, built with HTML, CSS, and JavaScript.",
+            view_project: "View project",
+            coming_soon_alt: "Project coming soon",
+            coming_soon: "Coming soon",
+            upcoming_projects: "More projects will appear here...",
+            github_stats: "GitHub Statistics",
+            github_description: "A snapshot of my GitHub contributions",
+            github_stats_alt: "GitHub statistics",
+            github_languages_alt: "Most-used languages on GitHub",
+            github_profile: "→ View my GitHub profile",
+            learning_journal: "📓 Learning Journal",
+            journal_intro: "Notes and reflections on my progress.",
+            journal_search_placeholder: "Search the journal...",
+            journal_search_label: "Search the learning journal",
+            filter_all: "All",
+            journal_react_title: "Learning React: Getting started",
+            journal_react_date: "August 1, 2025",
+            journal_react_entry: "I started learning React and really enjoyed understanding how components work...",
+            journal_css_title: "CSS Grid challenges",
+            journal_css_date: "August 5, 2025",
+            journal_css_entry: "I got a better understanding of spacing and how to use fr units in responsive layouts...",
+            hobbies_title: "My hobbies:",
+            hobby_read_title: "Reading:",
+            hobby_read: "In my free time, I love reading. I enjoy everything from educational material to romance and suspense, but fiction is my favorite genre.",
+            hobby_write_title: "Writing:",
+            hobby_write: "<span>I'm a writer who loves storytelling, with more than 20 books published on Amazon over </span><span id=\"anos-escritor\"></span><span> years. They all belong to the same universe, which I continue to build with care whenever I have time.</span>",
+            hobby_games_title: "Gaming:",
+            hobby_games: "I have an Xbox Series S and enjoy many kinds of games, especially RPGs, competitive games, and horror.",
+            hobby_fitness_title: "Working out:",
+            hobby_fitness: "I enjoy exercise and like to keep a consistent workout routine.",
+            hobby_movies_title: "Movies:",
+            hobby_movies: "I love great entertainment. Cinema and the craft behind the seventh art are among my favorite pastimes.",
+            hobby_anime_title: "Anime:",
+            hobby_anime: "I love Dragon Ball and Naruto, and I'm always open to recommendations for other great anime!",
+            contact_title: "Interactive Contact (Demo only for now)",
+            name_label: "Name:",
+            name_placeholder: "Your name",
+            email_label: "Email:",
+            email_placeholder: "you@email.com",
+            message_label: "Message:",
+            message_placeholder: "Your message",
+            send_message: "Send",
+            social_links: "Find me online:",
+            copyright: "&copy; <span id=\"ano-atual\"></span> João Muniz. All rights reserved.",
+            footer_quote: "\"Work done with love isn't work.\"",
+            copy_email: "Copy email address",
+            back_to_top: "↑ Back to top",
+            name_error: "Please enter a name with at least 3 characters.",
+            email_error: "Please enter a valid email address.",
+            message_error: "Your message must contain at least 10 characters.",
+            sending: "Sending...",
+            sent: "Message sent successfully. Thank you for reaching out!",
+            email_copied: "Email copied to the clipboard!",
+            email_copy_error: "Couldn't copy the email. Please copy it manually."
         }
     };
 
     function trocarIdioma(idioma) {
-        document.documentElement.setAttribute("lang", idioma === "pt" ? "pt-BR" : "en");
+        idiomaAtual = idioma === "en" ? "en" : "pt";
+        document.documentElement.setAttribute("lang", idiomaAtual === "pt" ? "pt-BR" : "en");
 
         document.querySelectorAll("[data-i18n]").forEach((el) => {
             const chave = el.getAttribute("data-i18n");
-            if (idioma === "pt") {
+            if (idiomaAtual === "pt") {
                 el.innerHTML = el.getAttribute("data-original");
             } else {
-                el.innerHTML = texts[idioma][chave] || el.getAttribute("data-original");
+                el.innerHTML = texts.en[chave] || el.getAttribute("data-original");
             }
         });
 
+        document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
+            el.getAttribute("data-i18n-attr").split(",").forEach((item) => {
+                const [attribute, key] = item.split(":").map((part) => part.trim());
+                const original = el.getAttribute(`data-original-${attribute}`);
+                el.setAttribute(attribute, idiomaAtual === "pt" ? original : texts.en[key] || original);
+            });
+        });
+
         // Atualiza classe das bandeiras
-        btnPt.classList.toggle("ativa", idioma === "pt");
-        btnEn.classList.toggle("ativa", idioma === "en");
+        btnPt.classList.toggle("ativa", idiomaAtual === "pt");
+        btnEn.classList.toggle("ativa", idiomaAtual === "en");
 
         // Salva preferência
-        localStorage.setItem("idiomaPreferido", idioma);
+        localStorage.setItem("idiomaPreferido", idiomaAtual);
 
         // 🔥 Recalcula os valores dinâmicos após trocar o innerHTML
         atualizarIdade("2001-05-19"); // mesma data que você usa no resto do código
@@ -385,6 +529,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll("[data-i18n]").forEach((el) => {
         el.setAttribute("data-original", el.innerHTML);
+    });
+
+    document.querySelectorAll("[data-i18n-attr]").forEach((el) => {
+        el.getAttribute("data-i18n-attr").split(",").forEach((item) => {
+            const [attribute] = item.split(":").map((part) => part.trim());
+            el.setAttribute(`data-original-${attribute}`, el.getAttribute(attribute));
+        });
     });
 
     btnPt.addEventListener("click", () => trocarIdioma("pt"));

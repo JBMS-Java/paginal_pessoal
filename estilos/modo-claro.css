@@ -8,4 +8,49 @@ body.modo-claro {
 .modo-claro header {
     background: var(--header-gradient);
     color: var(--text-color);
+    box-shadow: 0 2px 12px rgba(34, 31, 48, 0.12);
+}
+
+.modo-claro .skill-badge {
+    background-color: var(--accent-color);
+    box-shadow: 0 2px 6px rgba(52, 43, 68, 0.14);
+}
+
+.modo-claro .skill-badge:hover {
+    box-shadow: 0 3px 10px rgba(196, 90, 129, 0.2);
+}
+
+body.modo-claro #formacoes .formacao-toggle {
+    color: var(--text-color);
+}
+
+body.modo-claro #formacoes .formacao-visual {
+    --accent-color: #755a9e;
+}
+
+body.modo-claro #formacoes .formacao-visual::before {
+    background: rgba(201, 196, 211, 0.92);
+    border-color: rgba(121, 93, 168, 0.48);
+    box-shadow: inset 0 0 8px rgba(93, 69, 125, 0.1);
+}
+
+body.modo-claro #formacoes .percent-value {
+    color: #755a9e;
+}
+
+body.modo-claro #formacoes .formacao {
+    background: linear-gradient(155deg, #d9d5e0, #cec9d8);
+    border-color: rgba(121, 93, 168, 0.48);
+    box-shadow: inset 0 0 15px rgba(121, 93, 168, 0.05), 0 2px 8px rgba(52, 43, 68, 0.1);
+}
+
+body.modo-claro #formacoes .formacao:hover {
+    border-color: rgba(121, 93, 168, 0.72);
+    box-shadow: inset 0 0 18px rgba(121, 93, 168, 0.08), 0 0 12px rgba(121, 93, 168, 0.14);
+}
+
+body.modo-claro #formacoes .formacao-conteudo {
+    background: rgba(217, 213, 224, 0.96);
+    border-color: rgba(121, 93, 168, 0.24);
+    color: var(--text-color);
 }
