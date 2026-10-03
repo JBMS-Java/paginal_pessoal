@@ -190,23 +190,83 @@ document.addEventListener("DOMContentLoaded", function () {
     // === Diário de Aprendizado com busca, filtro e paginação ===
     const buscaInput = document.getElementById('busca-diario');
     const filtroTags = document.querySelectorAll('.tag-filtro');
-    const entradasWrapper = Array.from(document.querySelectorAll('.diario-entry-wrapper'));
+    const listaDiario = document.getElementById('lista-diario');
     let tagSelecionada = 'all';
     const itemsPorPagina = 3;
     let paginaAtual = 1;
+    let entradasWrapper = Array.from(document.querySelectorAll('.diario-entry-wrapper'));
     let entradasFiltradas = [...entradasWrapper];
-    const listaDiario = document.getElementById('lista-diario');
 
     const paginacaoContainer = document.createElement("div");
     paginacaoContainer.classList.add("paginacao");
-    listaDiario.after(paginacaoContainer);
+    if (listaDiario) listaDiario.after(paginacaoContainer);
+
+    function criarEntradaDiario(nota) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'diario-entry-wrapper';
+        wrapper.dataset.origem = 'dicionario';
+        wrapper.dataset.notaId = String(nota.id);
+        const categorias = obterCategoriasNota(nota);
+
+        const article = document.createElement('article');
+        article.className = 'diario-entry';
+        article.dataset.tags = categorias.join(',');
+
+        const removeButton = document.createElement('button');
+        removeButton.type = 'button';
+        removeButton.className = 'diario-remove';
+        removeButton.textContent = '✕';
+        removeButton.title = 'Remover nota';
+        removeButton.setAttribute('aria-label', 'Remover nota');
+        removeButton.addEventListener('click', async () => {
+            try {
+                await apiRequest(`/api/notes/${nota.id}`, { method: 'DELETE' });
+                await carregarNotasServidor();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        const titulo = document.createElement('h3');
+        titulo.textContent = nota.palavra;
+
+        const time = document.createElement('time');
+        const data = new Date(nota.id);
+        time.dateTime = data.toISOString().slice(0, 10);
+        time.textContent = data.toLocaleDateString('pt-BR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+
+        const texto = document.createElement('p');
+        texto.textContent = nota.nota;
+
+        const tags = document.createElement('div');
+        tags.className = 'diario-tags';
+        categorias.forEach(categoria => {
+            const tag = document.createElement('span');
+            tag.className = 'diario-tag';
+            tag.textContent = categoria;
+            tags.appendChild(tag);
+        });
+
+        article.appendChild(removeButton);
+        article.appendChild(titulo);
+        article.appendChild(time);
+        article.appendChild(texto);
+        article.appendChild(tags);
+        wrapper.appendChild(article);
+        return wrapper;
+    }
 
     function renderizarPagina(pagina) {
+        if (!listaDiario) return;
         paginaAtual = pagina;
-        entradasWrapper.forEach(item => item.style.display = "none");
+        entradasWrapper.forEach(item => item.style.display = 'none');
         const inicio = (pagina - 1) * itemsPorPagina;
         const fim = inicio + itemsPorPagina;
-        entradasFiltradas.slice(inicio, fim).forEach(item => item.style.display = "block");
+        entradasFiltradas.slice(inicio, fim).forEach(item => item.style.display = 'block');
         atualizarBotoes();
     }
 
@@ -217,7 +277,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const btnPrev = document.createElement("button");
         btnPrev.textContent = "<";
         btnPrev.classList.add("seta");
-        btnPrev.disabled = paginaAtual === 1;
+        btnPrev.disabled = paginaAtual === 1 || totalPaginas === 0;
         btnPrev.addEventListener("click", () => renderizarPagina(paginaAtual - 1));
         paginacaoContainer.appendChild(btnPrev);
 
@@ -239,12 +299,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function filtrarEntradas() {
+        if (!buscaInput || !listaDiario) return;
         const termoBusca = buscaInput.value.toLowerCase();
         entradasFiltradas = entradasWrapper.filter(wrapper => {
             const entry = wrapper.querySelector('.diario-entry');
-            const titulo = entry.querySelector('h3').textContent.toLowerCase();
-            const texto = entry.querySelector('p').textContent.toLowerCase();
-            const tags = entry.getAttribute('data-tags').toLowerCase();
+            if (!entry) return false;
+            const titulo = entry.querySelector('h3')?.textContent.toLowerCase() || '';
+            const texto = entry.querySelector('p')?.textContent.toLowerCase() || '';
+            const tags = (entry.getAttribute('data-tags') || '').toLowerCase();
             const bateTag = tagSelecionada === 'all' || tags.includes(tagSelecionada.toLowerCase());
             const bateBusca = titulo.includes(termoBusca) || texto.includes(termoBusca);
             return bateTag && bateBusca;
@@ -268,150 +330,323 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (buscaInput) buscaInput.addEventListener('input', filtrarEntradas);
-    filtrarEntradas();
 
-    // === Formulário Contato Interativo ===
+    // === Dicionário pessoal ===
+    const STORAGE_KEY_DICIONARIO = 'dicionario-pessoal-notas';
+    const formDicionario = document.getElementById('form-dicionario');
+    const listaDicionario = document.getElementById('lista-dicionario');
+    const palavraInput = document.getElementById('dicionario-palavra');
+    const notaInput = document.getElementById('dicionario-nota');
+    const categoriaCheckboxes = Array.from(document.querySelectorAll('.dicionario-categoria-checkbox'));
+    const acessoDicionario = document.getElementById('dicionario-acesso');
+    const contatoInbox = document.getElementById('contato-inbox');
+    const listaMensagens = document.getElementById('lista-mensagens');
+    const mensagensFeedback = document.getElementById('mensagens-feedback');
+    const btnAcessar = document.getElementById('btn-dicionario-acessar');
+    const btnSair = document.getElementById('btn-dicionario-sair');
+    const btnAtualizarMensagens = document.getElementById('btn-atualizar-mensagens');
+    let notasDicionario = [];
+
+    function normalizarCategorias(valor) {
+        const categorias = Array.isArray(valor) ? valor : [valor];
+        return categorias.map(item => String(item || '').trim()).filter(Boolean);
+    }
+
+    function obterCategoriasNota(nota) {
+        return normalizarCategorias(nota?.categorias ?? nota?.categoria).length
+            ? normalizarCategorias(nota?.categorias ?? nota?.categoria)
+            : ['React'];
+    }
+
+    function apiRequest(url, options = {}) {
+        if (location.protocol === 'file:') {
+            return Promise.reject(new Error('Abra o site por http://127.0.0.1:8000/ para enviar mensagens.'));
+        }
+
+        const headers = new Headers(options.headers || {});
+        if (options.body && !headers.has('Content-Type')) headers.set('Content-Type', 'application/json');
+        return fetch(url, { ...options, headers, credentials: 'same-origin' })
+            .then(async response => {
+                const body = await response.text();
+                let result;
+                try {
+                    result = JSON.parse(body);
+                } catch (error) {
+                    throw new Error(`O servidor respondeu com um formato inesperado (HTTP ${response.status}).`);
+                }
+                if (!response.ok) throw new Error(result.error || `Falha no servidor (HTTP ${response.status}).`);
+                return result;
+            })
+            .catch(error => {
+                if (error instanceof TypeError) {
+                    throw new Error('Não consegui conectar ao backend. Verifique se o servidor está rodando e abra http://127.0.0.1:8000/.');
+                }
+                throw error;
+            });
+    }
+
+    function carregarNotasDicionario() {
+        return notasDicionario;
+    }
+
+    function carregarNotasLegadas() {
+        try {
+            const notas = JSON.parse(localStorage.getItem(STORAGE_KEY_DICIONARIO) || '[]');
+            return Array.isArray(notas)
+                ? notas.map(nota => ({ ...nota, categorias: obterCategoriasNota(nota) }))
+                : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
+    async function importarNotasLegadas() {
+        const notas = carregarNotasLegadas();
+        if (!notas.length) return;
+        await apiRequest('/api/notes/import', { method: 'POST', body: JSON.stringify({ notes: notas }) });
+        localStorage.removeItem(STORAGE_KEY_DICIONARIO);
+    }
+
+    function setAcessoDicionario(liberado) {
+        formDicionario?.classList.toggle('dicionario-oculto', !liberado);
+        acessoDicionario?.classList.toggle('dicionario-oculto', liberado);
+        contatoInbox?.classList.toggle('dicionario-oculto', !liberado);
+    }
+
+    function renderizarDicionario() {
+        if (!listaDicionario) return;
+        listaDicionario.replaceChildren();
+        if (!notasDicionario.length) {
+            const vazio = document.createElement('div');
+            vazio.className = 'dicionario-vazio';
+            vazio.textContent = 'Ainda não há notas no dicionário.';
+            listaDicionario.appendChild(vazio);
+            return;
+        }
+
+        notasDicionario.forEach(nota => {
+            const item = document.createElement('article');
+            item.className = 'item-dicionario';
+            const remover = document.createElement('button');
+            remover.type = 'button';
+            remover.textContent = '✕';
+            remover.setAttribute('aria-label', 'Remover nota');
+            remover.addEventListener('click', async () => {
+                try {
+                    await apiRequest(`/api/notes/${nota.id}`, { method: 'DELETE' });
+                    await carregarNotasServidor();
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+            const titulo = document.createElement('h3');
+            titulo.textContent = nota.palavra;
+            const tags = document.createElement('div');
+            tags.className = 'diario-tags';
+            obterCategoriasNota(nota).forEach(categoria => {
+                const tag = document.createElement('span');
+                tag.className = 'diario-tag';
+                tag.textContent = categoria;
+                tags.appendChild(tag);
+            });
+            const texto = document.createElement('p');
+            texto.textContent = nota.nota;
+            item.append(remover, titulo, tags, texto);
+            listaDicionario.appendChild(item);
+        });
+    }
+
+    function renderizarNotasDicionarioNoDiario() {
+        if (!listaDiario) return;
+        listaDiario.querySelectorAll('.diario-entry-wrapper[data-origem="dicionario"]').forEach(item => item.remove());
+        notasDicionario.slice().sort((a, b) => Number(b.id) - Number(a.id)).forEach(nota => {
+            listaDiario.appendChild(criarEntradaDiario(nota));
+        });
+        entradasWrapper = Array.from(document.querySelectorAll('.diario-entry-wrapper'));
+    }
+
+    async function carregarNotasServidor() {
+        notasDicionario = await apiRequest('/api/notes');
+        renderizarDicionario();
+        renderizarNotasDicionarioNoDiario();
+        filtrarEntradas();
+    }
+
+    function renderizarMensagens(mensagens) {
+        if (!listaMensagens) return;
+        listaMensagens.replaceChildren();
+        if (!mensagens.length) {
+            const vazio = document.createElement('p');
+            vazio.className = 'dicionario-vazio';
+            vazio.textContent = 'Nenhuma mensagem recebida ainda.';
+            listaMensagens.appendChild(vazio);
+            return;
+        }
+        mensagens.forEach(mensagem => {
+            const item = document.createElement('article');
+            item.className = 'item-mensagem';
+            const cabecalho = document.createElement('div');
+            cabecalho.className = 'mensagem-cabecalho';
+            const nome = document.createElement('h4');
+            nome.textContent = mensagem.nome;
+            const remover = document.createElement('button');
+            remover.type = 'button';
+            remover.className = 'mensagem-remover';
+            remover.textContent = 'Remover';
+            remover.addEventListener('click', async () => {
+                try {
+                    await apiRequest(`/api/messages/${mensagem.id}`, { method: 'DELETE' });
+                    await carregarMensagens();
+                } catch (error) {
+                    if (mensagensFeedback) mensagensFeedback.textContent = error.message;
+                }
+            });
+            const email = document.createElement('a');
+            email.href = `mailto:${encodeURIComponent(mensagem.email)}`;
+            email.textContent = mensagem.email;
+            const data = document.createElement('time');
+            data.dateTime = mensagem.criadaEm;
+            data.textContent = new Date(mensagem.criadaEm).toLocaleString('pt-BR');
+            const texto = document.createElement('p');
+            texto.textContent = mensagem.mensagem;
+            cabecalho.append(nome, remover);
+            item.append(cabecalho, email, data, texto);
+            listaMensagens.appendChild(item);
+        });
+    }
+
+    async function carregarMensagens() {
+        renderizarMensagens(await apiRequest('/api/messages'));
+        if (mensagensFeedback) mensagensFeedback.textContent = '';
+    }
+
+    if (formDicionario && listaDicionario && palavraInput && notaInput) {
+        setAcessoDicionario(false);
+        renderizarDicionario();
+        btnAcessar?.addEventListener('click', async () => {
+            const password = prompt('Digite a senha do dicionário pessoal:');
+            if (password === null) return;
+            try {
+                await apiRequest('/api/admin/login', { method: 'POST', body: JSON.stringify({ password }) });
+                setAcessoDicionario(true);
+                await importarNotasLegadas();
+                await carregarNotasServidor();
+                await carregarMensagens();
+                palavraInput.focus();
+            } catch (error) {
+                setAcessoDicionario(false);
+                alert(error.message === 'Senha incorreta.' ? error.message : `Não foi possível acessar: ${error.message}`);
+            }
+        });
+        btnSair?.addEventListener('click', async () => {
+            try {
+                await apiRequest('/api/admin/logout', { method: 'POST', body: '{}' });
+            } finally {
+                setAcessoDicionario(false);
+                listaMensagens?.replaceChildren();
+            }
+        });
+        btnAtualizarMensagens?.addEventListener('click', () => carregarMensagens().catch(error => {
+            if (mensagensFeedback) mensagensFeedback.textContent = error.message;
+        }));
+        formDicionario.addEventListener('submit', async event => {
+            event.preventDefault();
+            const palavra = palavraInput.value.trim();
+            const nota = notaInput.value.trim();
+            const categorias = categoriaCheckboxes.filter(item => item.checked).map(item => item.value);
+            if (!palavra || !nota || !categorias.length) {
+                alert('Selecione pelo menos uma categoria para a nota.');
+                return;
+            }
+            try {
+                await apiRequest('/api/notes', { method: 'POST', body: JSON.stringify({ palavra, nota, categorias }) });
+                formDicionario.reset();
+                await carregarNotasServidor();
+                palavraInput.focus();
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+    }
+
+    apiRequest('/api/session').then(async session => {
+        await carregarNotasServidor();
+        if (!session.authenticated) return;
+        setAcessoDicionario(true);
+        await importarNotasLegadas();
+        await carregarNotasServidor();
+        await carregarMensagens();
+    }).catch(error => {
+        if (listaDicionario) listaDicionario.textContent = `Backend indisponível: ${error.message}`;
+    });
+
     const formContato = document.getElementById('form-contato');
     const feedback = document.getElementById('form-feedback');
-
     if (formContato) {
-        formContato.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const nome = formContato.nome.value.trim();
-            const email = formContato.email.value.trim();
-            const mensagem = formContato.mensagem.value.trim();
-
+        formContato.addEventListener('submit', async event => {
+            event.preventDefault();
+            const formData = new FormData(formContato);
+            const nome = String(formData.get('nome') || '').trim();
+            const email = String(formData.get('email') || '').trim();
+            const mensagem = String(formData.get('mensagem') || '').trim();
             if (nome.length < 3) {
-                feedback.textContent = idiomaAtual === "en" ? texts.en.name_error : 'Por favor, insira um nome com pelo menos 3 caracteres.';
+                feedback.textContent = idiomaAtual === 'en' ? texts.en.name_error : 'Por favor, insira um nome com pelo menos 3 caracteres.';
                 feedback.className = 'erro';
-                formContato.nome.focus();
+                formContato.elements.namedItem('nome').focus();
                 return;
             }
-
             if (!validateEmail(email)) {
-                feedback.textContent = idiomaAtual === "en" ? texts.en.email_error : 'Por favor, insira um email válido.';
+                feedback.textContent = idiomaAtual === 'en' ? texts.en.email_error : 'Por favor, insira um email válido.';
                 feedback.className = 'erro';
-                formContato.email.focus();
+                formContato.elements.namedItem('email').focus();
                 return;
             }
-
-            if (mensagem.length < 10) {
-                feedback.textContent = idiomaAtual === "en" ? texts.en.message_error : 'A mensagem deve conter pelo menos 10 caracteres.';
+            if (mensagem.length < 10 || mensagem.length > 3000) {
+                feedback.textContent = idiomaAtual === 'en' ? texts.en.message_error : 'A mensagem deve conter entre 10 e 3000 caracteres.';
                 feedback.className = 'erro';
-                formContato.mensagem.focus();
+                formContato.elements.namedItem('mensagem').focus();
                 return;
             }
-
-            feedback.textContent = idiomaAtual === "en" ? texts.en.sending : 'Enviando...';
+            feedback.textContent = idiomaAtual === 'en' ? texts.en.sending : 'Enviando...';
             feedback.className = '';
-
-            setTimeout(() => {
-                feedback.textContent = idiomaAtual === "en" ? texts.en.sent : 'Mensagem enviada com sucesso. Obrigado pelo contato.';
+            const botaoEnviar = formContato.querySelector('button[type="submit"]');
+            if (botaoEnviar) botaoEnviar.disabled = true;
+            try {
+                await apiRequest('/api/messages', {
+                    method: 'POST',
+                    body: JSON.stringify({ nome, email, mensagem, website: String(formData.get('website') || '') })
+                });
+                feedback.textContent = idiomaAtual === 'en' ? texts.en.sent : 'Mensagem enviada com sucesso. Obrigado pelo contato.';
                 feedback.className = 'sucesso';
                 formContato.reset();
-            }, 1500);
+            } catch (error) {
+                feedback.textContent = idiomaAtual === 'en' ? `Could not send: ${error.message}` : `Não foi possível enviar: ${error.message}`;
+                feedback.className = 'erro';
+            } finally {
+                if (botaoEnviar) botaoEnviar.disabled = false;
+            }
         });
     }
 
     function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email.toLowerCase());
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase());
     }
 
-    // === Botão copiar email no footer ===
     const btnCopiarEmail = document.getElementById('btn-copiar-email');
-    const emailParaCopiar = 'joaosanata@gmail.com';
-
-    let msgCopiar = document.getElementById('msg-copiar-email');
-    if (!msgCopiar) {
-        msgCopiar = document.createElement('div');
-        msgCopiar.id = 'msg-copiar-email';
-        msgCopiar.style.position = 'fixed';
-        msgCopiar.style.bottom = '5rem';
-        msgCopiar.style.right = '1rem';
-        msgCopiar.style.padding = '0.6rem 1rem';
-        msgCopiar.style.backgroundColor = 'rgba(0,0,0,0.8)';
-        msgCopiar.style.color = 'white';
-        msgCopiar.style.borderRadius = '4px';
-        msgCopiar.style.fontSize = '1rem';
-        msgCopiar.style.opacity = '0';
-        msgCopiar.style.pointerEvents = 'none';
-        msgCopiar.style.transition = 'opacity 0.4s ease';
-        document.body.appendChild(msgCopiar);
-    }
-
     if (btnCopiarEmail) {
-        btnCopiarEmail.addEventListener('click', () => {
-            navigator.clipboard.writeText(emailParaCopiar).then(() => {
-                msgCopiar.textContent = idiomaAtual === "en" ? texts.en.email_copied : 'Email copiado para a área de transferência!';
-                msgCopiar.style.opacity = '1';
-                setTimeout(() => msgCopiar.style.opacity = '0', 2200);
-            }).catch(() => {
-                msgCopiar.textContent = idiomaAtual === "en" ? texts.en.email_copy_error : 'Erro ao copiar o email. Tente manualmente.';
-                msgCopiar.style.opacity = '1';
-                setTimeout(() => msgCopiar.style.opacity = '0', 2200);
-            });
+        btnCopiarEmail.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText('joaosanata@gmail.com');
+                alert(texts.en.email_copied);
+            } catch (error) {
+                alert(texts.en.email_copy_error);
+            }
         });
     }
 
-    // === Botão voltar ao topo ===
-    const btnVoltarTopo = document.querySelector('.voltar-topo');
-    if (btnVoltarTopo) {
-        btnVoltarTopo.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-
-    // === Troca de Idioma ===
-    const btnPt = document.getElementById("btn-pt");
-    const btnEn = document.getElementById("btn-en");
-
-    let idiomaAtual = "pt";
+    let idiomaAtual = 'pt';
     const texts = {
         en: {
-            page_title: "João Muniz | Portfolio",
-            profile_alt: "João Muniz's profile photo",
-            toggle_theme: "Toggle color theme",
-            language_portuguese: "Portuguese",
-            language_english: "English",
-            objetivo: "Future Software Engineer",
-            sobre: "About me:",
-            apresentacao: `Hello! My name is <strong>João Batista Muniz de Santana</strong>. I'm <strong><span id="idade"></span> years old</strong> and study <a href="https://en.wikipedia.org/wiki/Software_engineering" class="button" target="_blank" rel="external">Software&nbsp;Engineering</a> at <a href="https://www.unilasalle.edu.br/" class="button" target="_blank" rel="external">LaSalle</a> University!`,
-            apresentacao2: `I was born and raised in <strong>Rio de Janeiro</strong>, in the state capital <strong>(RJ)</strong>, but now I live in <strong>Canoas</strong>, <strong>Rio Grande do Sul (RS)</strong>. I lived in Rio until I was 20 🙃. I enjoy staying open to new experiences, going out with friends, sharing a meal, and spending good time together. I study programming, especially <span><a href="https://en.wikipedia.org/wiki/HTML5" target="_blank" rel="external" class="button">HTML5</a></span>, <span><a href="https://en.wikipedia.org/wiki/CSS" target="_blank" rel="external" class="button">CSS3</a></span>, <span><a href="https://en.wikipedia.org/wiki/JavaScript" target="_blank" rel="external" class="button">JavaScript</a></span>, and <span><a href="https://en.wikipedia.org/wiki/Python_(programming_language)" target="_blank" rel="external" class="button">Python</a></span>. I love building projects and solving problems, and I'm also exploring <span><a href="https://en.wikipedia.org/wiki/Machine_learning" target="_blank" rel="external" class="button">Machine Learning (ML)</a></span>. I want to specialize in <span><a href="https://en.wikipedia.org/wiki/Artificial_intelligence" target="_blank" rel="external" class="button">AI</a></span> to create useful, creative solutions that can help people.`,
-            stacks: "My Tech Stack",
-            tecnologias: "Favorite Technologies",
-            tecnologias_descricao: "The tools and languages I most enjoy working with",
-            nivel_3: "Advanced",
-            nivel_2: "Intermediate",
-            nivel_1: "Beginner",
-            experiencias_titulo: "Relevant Professional Experience",
-            data_inicio: "Start: ",
-            data_fim: "End: ",
-            cargo1: "Position: Service Desk Analyst",
-            cargo2: "Position: IT Intern",
-            cargo3: "Position: Junior Operator",
-            empresa1: "Company: HCLTechnologies (HCLTech)",
-            empresa2: "Company: Fundação Hospital Centenário de São Leopoldo (FHC)",
-            empresa3: "Company: Rede Brasil de Gestão de Ativos",
-            descricao1: "I work as a bilingual Service Desk Analyst, troubleshooting issues and assisting users in Brazil and abroad.",
-            descricao2: "I provided IT support, handling service requests and assisting doctors and other hospital staff to deliver the best possible experience for patients. I took part in infrastructure improvement projects involving both systems and hardware, such as switches. As a Level 1 technician, I handled initial contact and resolved a range of requests in collaboration with the team.",
-            descricao3: "I worked in collections operations as an SDR, providing empathetic customer service and practical solutions.",
-            sistemas: "Systems used:",
-            competencias: "Skills:",
-            hard_skills: "Hard skills:",
-            soft_skills: "Soft skills:",
-            ingles: "English",
-            espanhol: "Spanish",
-            SS1: "Good communication",
-            SS2: "Easy to get along with",
-            SS3: "Teamwork",
-            SS4: "Patient",
-            SS5: "Adaptable",
-            SS6: "Proactive",
-            SS7: "Ethical",
-            SS8: "Responsible",
             formacoes: "Education & Training",
             ES: "Software Engineering",
             graduacao: "Level: Undergraduate",
@@ -451,6 +686,7 @@ document.addEventListener("DOMContentLoaded", function () {
             journal_search_placeholder: "Search the journal...",
             journal_search_label: "Search the learning journal",
             filter_all: "All",
+            spanish_filter: "Spanish",
             journal_react_title: "Learning React: Getting started",
             journal_react_date: "August 1, 2025",
             journal_react_entry: "I started learning React and really enjoyed understanding how components work...",
@@ -470,7 +706,7 @@ document.addEventListener("DOMContentLoaded", function () {
             hobby_movies: "I love great entertainment. Cinema and the craft behind the seventh art are among my favorite pastimes.",
             hobby_anime_title: "Anime:",
             hobby_anime: "I love Dragon Ball and Naruto, and I'm always open to recommendations for other great anime!",
-            contact_title: "Interactive Contact (Demo only for now)",
+            contact_title: "Interactive Contact",
             name_label: "Name:",
             name_placeholder: "Your name",
             email_label: "Email:",
@@ -492,6 +728,9 @@ document.addEventListener("DOMContentLoaded", function () {
             email_copy_error: "Couldn't copy the email. Please copy it manually."
         }
     };
+
+    const btnPt = document.getElementById('btn-pt');
+    const btnEn = document.getElementById('btn-en');
 
     function trocarIdioma(idioma) {
         idiomaAtual = idioma === "en" ? "en" : "pt";

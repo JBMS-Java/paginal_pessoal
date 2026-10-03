@@ -80,6 +80,223 @@
   }
 }
 
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 15px;
+    }
+
+    header {
+        padding: 1.25rem 1rem 1.5rem;
+    }
+
+    .foto-perfil {
+        width: 150px;
+        height: 150px;
+    }
+
+    .objetivo {
+        font-size: 1rem;
+        line-height: 1.3;
+    }
+
+    section {
+        padding: 2.5rem 1rem;
+    }
+
+    .container,
+    .tecnologias-section,
+    .secao-experiencia,
+    #formacoes {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    #sobre h2,
+    .section-title,
+    #hobbies h2 {
+        font-size: clamp(1.5rem, 7vw, 2.1rem);
+    }
+
+    #sobre p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .button {
+        display: inline-block;
+        margin: 0.1rem 0;
+    }
+
+    .tecnologias-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+    }
+
+    .tecnologia-card {
+        padding: 0.75rem 0.5rem;
+    }
+
+    .tec-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .competencias-container {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .subtitulo {
+        display: block;
+        width: 100%;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .secao-habilidades {
+        gap: 0.55rem;
+    }
+
+    .skill-badge {
+        padding: 0.55rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    #formacoes {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        padding: 1rem 0.75rem;
+    }
+
+    #formacoes > h2 {
+        grid-column: 1 / -1;
+    }
+
+    .formacao {
+        flex-basis: auto;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .formacao-toggle {
+        min-height: 230px;
+        padding: 0.85rem 0.6rem 1.8rem;
+        gap: 0.5rem;
+    }
+
+    .formacao-toggle .titulo {
+        font-size: 0.8rem;
+        min-height: 36px;
+    }
+
+    .formacao-visual {
+        width: 96px;
+        height: 96px;
+    }
+
+    .formacao-icon {
+        font-size: 2rem;
+    }
+
+    .percent-value,
+    .porcentagem {
+        font-size: 1.1rem;
+    }
+
+    .diario-container {
+        padding: 1rem 0.8rem;
+    }
+
+    #busca-diario {
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    #filtro-tags {
+        justify-content: center;
+        gap: 0.45rem;
+    }
+
+    .tag-filtro {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.72rem;
+    }
+
+    .diario-lista {
+        gap: 1rem;
+        max-height: none;
+        padding: 0.25rem;
+    }
+
+    .diario-entry {
+        padding: 0.9rem 0.9rem 1rem;
+    }
+
+    .diario-entry h3 {
+        font-size: 1.05rem;
+    }
+
+    .diario-entry time,
+    .diario-entry p,
+    .diario-tag {
+        font-size: 0.82rem;
+    }
+
+    .diario-entry p {
+        line-height: 1.5;
+        -webkit-line-clamp: 3;
+    }
+
+    .secao-experiencia {
+        padding: 1.25rem 0.8rem;
+    }
+
+    .experiencia {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .experiencia h3,
+    .experiencia h4 {
+        font-size: 1rem;
+    }
+
+    .experiencia p,
+    .sistemas-usados li,
+    .sistemas-usados ul {
+        font-size: 0.92rem;
+    }
+
+    .floating-toggle {
+        bottom: 1rem;
+        right: 1rem;
+    }
+}
+
+@media (max-width: 420px) {
+    #formacoes {
+        grid-template-columns: 1fr;
+    }
+
+    .tecnologias-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-badge {
+        width: 100%;
+        text-align: center;
+    }
+
+    .language-switch {
+        margin-bottom: 0.5rem;
+    }
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -590,7 +807,7 @@ article > p {
     flex-direction: column;
     align-items: stretch;
     gap: 4rem;
-    max-height: 60vh;
+    max-height: none;
     overflow-y: visible;
     padding: 1rem;
 }
@@ -605,6 +822,7 @@ article > p {
         0 0 15px var(--accent-color);
     transition: box-shadow 0.25s ease;
     background: transparent;
+    overflow: hidden;
 }
 
 .diario-entry-wrapper:hover {
@@ -623,6 +841,20 @@ article > p {
     cursor: default;
     box-shadow: none;
     transition: transform 0.25s ease;
+}
+
+.diario-remove {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    border: 1px solid rgba(255, 42, 109, 0.8);
+    background: rgba(255, 42, 109, 0.08);
+    color: var(--text-color);
+    border-radius: 999px;
+    width: 1.9rem;
+    height: 1.9rem;
+    cursor: pointer;
+    font-weight: 700;
 }
 
 .diario-entry-wrapper:hover .diario-entry {
@@ -652,6 +884,11 @@ article > p {
     font-size: 1rem;
     color: var(--text-color);
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .diario-tags {
@@ -668,6 +905,259 @@ article > p {
     border-radius: 12px;
     font-size: 0.8rem;
     user-select: none;
+}
+
+.dicionario-section {
+    padding: 2rem 1rem 3rem;
+}
+
+.dicionario-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: rgba(3, 18, 31, 0.92);
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 18px rgba(5, 217, 232, 0.2);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.dicionario-container > p {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.dicionario-form {
+    display: grid;
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.dicionario-oculto {
+    display: none !important;
+}
+
+.dicionario-acesso {
+    display: grid;
+    gap: 0.8rem;
+    justify-items: center;
+    margin-bottom: 1.2rem;
+    padding: 1rem;
+    border: 1px dashed rgba(5, 217, 232, 0.7);
+    border-radius: 12px;
+    background: rgba(5, 217, 232, 0.04);
+}
+
+.dicionario-acesso p {
+    margin: 0;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.dicionario-acesso button,
+.btn-secundario {
+    border: none;
+    background: linear-gradient(135deg, var(--accent-color), var(--highlight-color));
+    color: #041824;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.75rem 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 14px rgba(5, 217, 232, 0.26);
+}
+
+.btn-secundario {
+    background: transparent;
+    border: 1px solid rgba(5, 217, 232, 0.7);
+    color: var(--text-color);
+    box-shadow: none;
+}
+
+.dicionario-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.dicionario-form input,
+.dicionario-form textarea,
+.dicionario-form select {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--accent-color);
+    background: rgba(1, 11, 20, 0.8);
+    color: var(--text-color);
+    padding: 0.8rem 1rem;
+    font: inherit;
+    resize: vertical;
+}
+
+.dicionario-label {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.dicionario-categorias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.9rem;
+    padding: 0.35rem 0;
+}
+
+.dicionario-categorias label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.dicionario-categorias input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+}
+
+.dicionario-form input:focus,
+.dicionario-form textarea:focus,
+.dicionario-form select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(5, 217, 232, 0.25);
+}
+
+.dicionario-form button {
+    justify-self: start;
+    border: none;
+    background: linear-gradient(135deg, var(--accent-color), var(--highlight-color));
+    color: #041824;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.75rem 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 14px rgba(5, 217, 232, 0.26);
+}
+
+.dicionario-form button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(255, 42, 109, 0.3);
+}
+
+.lista-dicionario {
+    display: grid;
+    gap: 0.9rem;
+}
+
+.item-dicionario {
+    background: rgba(7, 29, 42, 0.8);
+    border: 1px solid rgba(5, 217, 232, 0.5);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    position: relative;
+}
+
+.item-dicionario h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.05rem;
+    color: var(--accent-color);
+}
+
+.item-dicionario p {
+    margin: 0;
+    color: var(--text-color);
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.item-dicionario button {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    border: 1px solid rgba(255, 42, 109, 0.7);
+    background: transparent;
+    color: var(--text-color);
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    cursor: pointer;
+}
+
+.item-dicionario button:hover {
+    background: rgba(255, 42, 109, 0.08);
+}
+
+.dicionario-vazio {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 0.75rem;
+    border: 1px dashed rgba(5, 217, 232, 0.5);
+    border-radius: 10px;
+}
+
+.contato-inbox {
+    margin: 1.5rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(5, 217, 232, 0.4);
+}
+
+.contato-inbox-cabecalho,
+.mensagem-cabecalho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.contato-inbox-cabecalho h3,
+.item-mensagem h4 {
+    margin: 0;
+    color: var(--accent-color);
+}
+
+.contato-inbox-cabecalho button,
+.mensagem-remover {
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    padding: 0.45rem 0.7rem;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+.lista-mensagens {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.item-mensagem {
+    display: grid;
+    gap: 0.45rem;
+    padding: 0.85rem;
+    border: 1px solid rgba(5, 217, 232, 0.4);
+    border-radius: 8px;
+    color: var(--text-color);
+    overflow-wrap: anywhere;
+}
+
+.item-mensagem time {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.item-mensagem p {
+    margin: 0.25rem 0 0;
+    white-space: pre-wrap;
+}
+
+.campo-armadilha {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
 }
 
 /* PAGINAÇÃO */

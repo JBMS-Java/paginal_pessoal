@@ -399,6 +399,7 @@
                     <button class="tag-filtro" data-tag="Python" aria-pressed="false">Python</button>
                     <button class="tag-filtro" data-tag="Machine-learning" aria-pressed="false">ML</button>
                     <button class="tag-filtro" data-tag="ingles" aria-pressed="false" data-i18n="ingles">Inglês</button>
+                    <button class="tag-filtro" data-tag="espanhol" aria-pressed="false" data-i18n="spanish_filter">Espanhol</button>
                     <button class="tag-filtro" data-tag="git" aria-pressed="false">Git</button>
                     <button class="tag-filtro" data-tag="php" aria-pressed="false">PHP</button>
                     <button class="tag-filtro" data-tag="sql" aria-pressed="false">SQL</button>
@@ -428,6 +429,51 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+        <section id="dicionario" class="dicionario-section">
+            <div class="dicionario-container">
+                <h2 class="section-title">📘 Dicionário pessoal</h2>
+                <p>Adicione palavras, conceitos ou lembretes que você queira guardar.</p>
+
+                <div id="dicionario-acesso" class="dicionario-acesso">
+                    <p>Área privada. Digite a senha para acessar e editar suas anotações.</p>
+                    <button id="btn-dicionario-acessar" type="button">Acessar área privada</button>
+                </div>
+
+                <form id="form-dicionario" class="dicionario-form dicionario-oculto">
+                    <input type="text" id="dicionario-palavra" name="palavra" maxlength="40" placeholder="Palavra ou conceito" required>
+                    <label class="dicionario-label">Categorias:</label>
+                    <div id="dicionario-categorias" class="dicionario-categorias">
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="React"> React</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="JavaScript"> JavaScript</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="CSS"> CSS</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="HTML"> HTML</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="Python"> Python</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="Machine Learning"> Machine Learning</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="Inglês"> Inglês</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="Espanhol"> Espanhol</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="Git"> Git</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="PHP"> PHP</label>
+                        <label><input type="checkbox" class="dicionario-categoria-checkbox" value="SQL"> SQL</label>
+                    </div>
+                    <textarea id="dicionario-nota" name="nota" maxlength="280" rows="3" placeholder="Escreva a sua nota ou definição..." required></textarea>
+                    <div class="dicionario-actions">
+                        <button type="submit">Adicionar</button>
+                        <button type="button" id="btn-dicionario-sair" class="btn-secundario">Sair</button>
+                    </div>
+                </form>
+
+                <section id="contato-inbox" class="contato-inbox dicionario-oculto" aria-labelledby="titulo-caixa-entrada">
+                    <div class="contato-inbox-cabecalho">
+                        <h3 id="titulo-caixa-entrada">Mensagens recebidas</h3>
+                        <button type="button" id="btn-atualizar-mensagens" aria-label="Atualizar mensagens" title="Atualizar mensagens">Atualizar</button>
+                    </div>
+                    <p id="mensagens-feedback" aria-live="polite"></p>
+                    <div id="lista-mensagens" class="lista-mensagens"></div>
+                </section>
+
+                <div id="lista-dicionario" class="lista-dicionario" aria-live="polite"></div>
             </div>
         </section>
         <section aria-labelledby="titulo-hobbies" id="hobbies" class="container">
@@ -460,8 +506,9 @@
             </ul>
         </section>
         <section id="contato" class="secao-contato">
-            <h2 class="titulo-secao" data-i18n="contact_title">Contato Interativo (Obs: Apenas demonstrativo, por enquanto...)</h2>
+            <h2 class="titulo-secao" data-i18n="contact_title">Contato Interativo</h2>
             <form id="form-contato" novalidate>
+                <input type="text" name="website" class="campo-armadilha" tabindex="-1" autocomplete="off" aria-hidden="true">
                 <label for="nome" data-i18n="name_label">Nome:</label>
                 <input type="text" id="nome" name="nome" placeholder="Seu nome" data-i18n-attr="placeholder:name_placeholder" required minlength="3">
 
@@ -469,7 +516,7 @@
                 <input type="email" id="email" name="email" placeholder="seu@email.com" data-i18n-attr="placeholder:email_placeholder" required>
                 
                 <label for="mensagem" data-i18n="message_label">Mensagem</label>
-                <textarea id="mensagem" name="mensagem" placeholder="Mensagem" data-i18n-attr="placeholder:message_placeholder"></textarea>
+                <textarea id="mensagem" name="mensagem" placeholder="Mensagem" data-i18n-attr="placeholder:message_placeholder" maxlength="3000" required></textarea>
 
                 <button type="submit" data-i18n="send_message">Enviar</button>
                 <p id="form-feedback" aria-live="polite"></p>
