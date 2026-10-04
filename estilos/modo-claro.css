@@ -49,6 +49,11 @@ body.modo-claro #formacoes .formacao:hover {
     box-shadow: inset 0 0 18px rgba(121, 93, 168, 0.08), 0 0 12px rgba(121, 93, 168, 0.14);
 }
 
+body.modo-claro #formacoes .formacao.formacao-concluida:hover {
+    border-color: #ffd166;
+    box-shadow: inset 0 0 22px rgba(255, 209, 102, 0.16), 0 0 20px rgba(255, 209, 102, 0.42);
+}
+
 body.modo-claro #formacoes .formacao-conteudo {
     background: rgba(217, 213, 224, 0.96);
     border-color: rgba(121, 93, 168, 0.24);

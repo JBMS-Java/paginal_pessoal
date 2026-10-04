@@ -146,6 +146,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (valorAtual >= porcentagem) {
                     valorAtual = porcentagem;
                     clearInterval(animacao);
+                    if (porcentagem === 100) {
+                        const formacao = botao.closest('.formacao');
+                        if (formacao) formacao.classList.add('formacao-concluida');
+                    }
                 }
                 visual.style.setProperty('--progress', String(valorAtual));
                 valorTexto.textContent = valorAtual + '%';
@@ -647,6 +651,43 @@ document.addEventListener("DOMContentLoaded", function () {
     let idiomaAtual = 'pt';
     const texts = {
         en: {
+            page_title: "João Muniz's Portfolio",
+            objetivo: "Future Software Engineer",
+            sobre: "About me:",
+            apresentacao: "Hello! My name is <strong>João Batista Muniz de Santana</strong>, I am <strong><span id=\"idade\"></span> years old</strong>, and I am a Software Engineering student at <span><a href=\"https://pt.wikipedia.org/wiki/Engenharia_de_software\" class=\"button\" target=\"_blank\" rel=\"external\">La Salle University</a></span>!",
+            apresentacao2: "I was born and raised in <strong>Rio de Janeiro</strong>, Brazil, and now live in <strong>Canoas</strong>, in the state of <strong>Rio Grande do Sul</strong>. I lived in Rio until I was 20 🙃. I always try to stay open to meeting new people and ideas. I enjoy going out with friends, having something to eat, and spending a good time together. I study programming, especially <span><a href=\"https://pt.wikipedia.org/wiki/HTML5\" target=\"_blank\" rel=\"external\" class=\"button\">HTML5</a></span>, <span><a href=\"https://en.wikipedia.org/wiki/CSS\" target=\"_blank\" rel=\"external\" class=\"button\">CSS3</a></span>, <span><a href=\"https://pt.wikipedia.org/wiki/JavaScript\" target=\"_blank\" rel=\"external\" class=\"button\">JavaScript</a></span>, and <span><a href=\"https://en.wikipedia.org/wiki/Python_(programming_language)\" target=\"_blank\" rel=\"external\" class=\"button\">Python</a></span>. I love building projects from scratch and solving problems. I am also getting into <span><a href=\"https://en.wikipedia.org/wiki/Machine_learning\" target=\"_blank\" rel=\"external\" class=\"button\">Machine Learning (ML)</a></span> and want to specialize in <span><a href=\"https://pt.wikipedia.org/wiki/Intelig%C3%AAncia_artificial\" target=\"_blank\" rel=\"external\" class=\"button\">Artificial Intelligence (AI)</a></span> to create useful, creative solutions that can truly help people.",
+            stacks: "My Tech Stack:",
+            tecnologias: "💻 Favorite Technologies",
+            tecnologias_descricao: "Programming languages and tools I most enjoy working with",
+            nivel_3: "Advanced",
+            nivel_2: "Intermediate",
+            nivel_1: "Beginner",
+            experiencias_titulo: "Relevant Work Experience",
+            data_inicio: "Start: ",
+            data_fim: "End: ",
+            cargo1: "Position: Service Desk Analyst",
+            empresa1: "Company: HCL Technologies (HCLTech)",
+            descricao1: "I work as a bilingual Service Desk Analyst, troubleshooting issues and providing support nationally and internationally.",
+            cargo2: "Position: IT Intern",
+            empresa2: "Company: Fundação Hospital Centenário de São Leopoldo (FHC)",
+            descricao2: "I worked in IT support, handling service requests and assisting doctors and other staff to deliver the best possible outcome for patients. I took part in hospital infrastructure improvement projects involving both systems and hardware (such as switches). As a Level 1 support analyst, I handled initial contact and resolved both simple and more complex requests in collaboration with the team.",
+            cargo3: "Position: Junior Operations Associate",
+            empresa3: "Company: Rede Brasil de Gestão de Ativos",
+            descricao3: "I worked in debt-collection operations, applying SDR practices, providing empathetic customer service, and offering effective solutions.",
+            sistemas: "Systems used:",
+            competencias: "Skills:",
+            hard_skills: "Hard Skills:",
+            ingles: "English",
+            soft_skills: "Soft Skills:",
+            SS1: "Good communication",
+            SS2: "Easygoing",
+            SS3: "Teamwork",
+            SS4: "Patient",
+            SS5: "Adaptability",
+            SS6: "Proactive",
+            SS7: "Integrity",
+            SS8: "Responsibility",
+            espanhol: "Spanish",
             formacoes: "Education & Training",
             ES: "Software Engineering",
             graduacao: "Level: Undergraduate",

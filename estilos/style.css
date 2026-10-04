@@ -1576,6 +1576,36 @@ article h3 {
     transform: translateY(-2px);
 }
 
+#formacoes .formacao.formacao-concluida:hover {
+    border-color: #ffd166;
+    background: linear-gradient(155deg, rgba(76, 55, 15, 0.98), rgba(31, 24, 12, 0.98));
+    box-shadow: inset 0 0 22px rgba(255, 209, 102, 0.16), 0 0 20px rgba(255, 209, 102, 0.42);
+}
+
+#formacoes .formacao.formacao-concluida:hover .formacao-toggle {
+    background: rgba(255, 209, 102, 0.06);
+    color: #ffe3a3;
+}
+
+#formacoes .formacao.formacao-concluida:hover .formacao-visual {
+    background: conic-gradient(#ffd166 calc(var(--progress) * 1%), rgba(25, 20, 12, 0.96) 0);
+    box-shadow: inset 0 0 16px rgba(255, 209, 102, 0.24), 0 0 18px rgba(255, 209, 102, 0.3);
+    transform: scale(1.04);
+}
+
+#formacoes .formacao.formacao-concluida:hover .formacao-visual::before {
+    background: rgba(25, 20, 12, 0.96);
+    border-color: rgba(255, 209, 102, 0.72);
+    box-shadow: inset 0 0 10px rgba(255, 209, 102, 0.2);
+}
+
+#formacoes .formacao.formacao-concluida:hover .formacao-icon,
+#formacoes .formacao.formacao-concluida:hover .percent-value,
+#formacoes .formacao.formacao-concluida:hover .icone-seta {
+    color: #ffd166;
+    text-shadow: 0 0 10px rgba(255, 209, 102, 0.55);
+}
+
 .formacao .formacao-conteudo {
     display: none;
     max-height: 500px;
