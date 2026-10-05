@@ -746,7 +746,7 @@ document.addEventListener("DOMContentLoaded", function () {
             hobby_movies_title: "Movies:",
             hobby_movies: "I love great entertainment. Cinema and the craft behind the seventh art are among my favorite pastimes.",
             hobby_anime_title: "Anime:",
-            hobby_anime: "I love Dragon Ball and Naruto, and I'm always open to recommendations for other great anime!",
+            hobby_anime: "I love Dragon Ball, Naruto, and Jujutsu Kaisen, and I'm always open to recommendations for other great anime!",
             contact_title: "Interactive Contact",
             name_label: "Name:",
             name_placeholder: "Your name",
