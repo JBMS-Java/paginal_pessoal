@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: paginal-pessoal
+    runtime: python
+    plan: free
+    buildCommand: python -m compileall -q backend
+    startCommand: python backend/server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: COOKIE_SECURE
+        value: "1"
+      - key: ADMIN_PASSWORD
+        sync: false

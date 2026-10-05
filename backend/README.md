@@ -14,4 +14,10 @@ As mensagens do formulário são gravadas no SQLite e aparecem em **Mensagens re
 
 ## Publicação
 
-O servidor local usa `ThreadingHTTPServer` e é destinado a desenvolvimento/uso pessoal. Para receber mensagens publicamente, hospede a aplicação em um serviço Python com HTTPS e disco persistente; configure `HOST=0.0.0.0`, `COOKIE_SECURE=1` e uma `ADMIN_PASSWORD` forte fora do repositório. Faça backup do banco SQLite. Não use `file://`: a página e a API precisam estar na mesma origem HTTP/HTTPS.
+O GitHub Pages hospeda apenas os arquivos estáticos e não executa a API. Para que o formulário, o login e o dicionário funcionem no site público, publique o site e o backend juntos em um serviço Python. O arquivo `render.yaml` prepara a publicação no Render:
+
+1. Envie o projeto ao GitHub.
+2. No Render, crie um **Blueprint** usando este repositório e informe uma `ADMIN_PASSWORD` forte com pelo menos 12 caracteres.
+3. Aguarde o deploy e use a URL `onrender.com` como endereço público do site. O GitHub Pages continuará sem API.
+
+A configuração usa o plano gratuito do Render. Ele não tem disco persistente: notas e mensagens salvas no SQLite podem desaparecer quando o serviço reiniciar ou for publicado novamente. Para manter esses dados, use hospedagem com disco persistente e configure `DATA_DIR` nesse disco. Não use `file://`: a página e a API precisam estar na mesma origem HTTP/HTTPS.
