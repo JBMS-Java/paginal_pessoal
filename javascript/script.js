@@ -743,6 +743,8 @@ document.addEventListener("DOMContentLoaded", function () {
             hobby_games: "I have an Xbox Series S and enjoy many kinds of games, especially RPGs, competitive games, and horror.",
             hobby_fitness_title: "Working out:",
             hobby_fitness: "I enjoy exercise and like to keep a consistent workout routine.",
+            hobby_kickboxing_title: "Kickboxing:",
+            hobby_kickboxing: "I train in kickboxing when I'm not working out or studying.",
             hobby_movies_title: "Movies:",
             hobby_movies: "I love great entertainment. Cinema and the craft behind the seventh art are among my favorite pastimes.",
             hobby_anime_title: "Anime:",
